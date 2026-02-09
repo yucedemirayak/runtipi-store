@@ -21,7 +21,7 @@
       "label": "Admin Username",
       "max": 50,
       "min": 1,
-      "required": true,
+      "required": false,
       "env_variable": "TIPI_POSTGRES_USER",
       "default": "postgres"
     },
@@ -30,7 +30,7 @@
       "label": "Admin Password",
       "max": 64,
       "min": 8,
-      "required": true,
+      "required": false,
       "env_variable": "TIPI_POSTGRES_PASSWORD",
       "default": "postgres"
     },
@@ -39,7 +39,7 @@
       "label": "Database Name",
       "max": 63,
       "min": 1,
-      "required": true,
+      "required": false,
       "env_variable": "TIPI_POSTGRES_DB",
       "default": "app"
     }
