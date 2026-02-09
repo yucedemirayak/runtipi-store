@@ -16,6 +16,7 @@ Kisisel Runtipi app-store reposu.
 ## App'ler
 
 - `cloudbeaver`
+- `postgres`
 
 ## Runtipi'ye ekleme
 
