@@ -1,0 +1,33 @@
+{
+  "$schema": "../app-info-schema.json",
+  "name": "Redis",
+  "id": "redis",
+  "available": true,
+  "short_desc": "In-memory key-value data store",
+  "author": "Redis Ltd.",
+  "port": 6379,
+  "categories": ["development", "data"],
+  "description": "Redis is an in-memory data structure store used as a database, cache, and message broker.",
+  "tipi_version": 1,
+  "version": "7.4-alpine",
+  "source": "https://github.com/redis/redis",
+  "website": "https://redis.io/",
+  "exposable": true,
+  "dynamic_config": true,
+  "no_gui": true,
+  "form_fields": [
+    {
+      "type": "password",
+      "label": "Redis Password",
+      "max": 128,
+      "min": 8,
+      "required": false,
+      "env_variable": "TIPI_REDIS_PASSWORD",
+      "default": "redispass"
+    }
+  ],
+  "supported_architectures": ["arm64", "amd64"],
+  "created_at": 1770665645000,
+  "updated_at": 1770665645000,
+  "min_tipi_version": "4.5.0"
+}

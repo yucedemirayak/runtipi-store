@@ -1,0 +1,37 @@
+version: '3.8'
+services:
+  redis:
+    container_name: redis
+    image: redis:7.4-alpine
+    restart: unless-stopped
+    ports:
+      - ${APP_PORT}:6379
+    networks:
+      - tipi_main_network
+    environment:
+      - TZ=${TZ}
+    command: >
+      sh -c "redis-server --appendonly yes --save 60 1 --requirepass ${TIPI_REDIS_PASSWORD}"
+    volumes:
+      - ${APP_DATA_DIR}/data:/data
+    labels:
+      traefik.enable: true
+      traefik.http.middlewares.redis-web-redirect.redirectscheme.scheme: https
+      traefik.http.services.redis.loadbalancer.server.port: 6379
+      traefik.http.routers.redis-insecure.rule: Host(`${APP_DOMAIN}`)
+      traefik.http.routers.redis-insecure.entrypoints: web
+      traefik.http.routers.redis-insecure.service: redis
+      traefik.http.routers.redis-insecure.middlewares: redis-web-redirect
+      traefik.http.routers.redis.rule: Host(`${APP_DOMAIN}`)
+      traefik.http.routers.redis.entrypoints: websecure
+      traefik.http.routers.redis.service: redis
+      traefik.http.routers.redis.tls.certresolver: myresolver
+      traefik.http.routers.redis-local-insecure.rule: Host(`redis.${LOCAL_DOMAIN}`)
+      traefik.http.routers.redis-local-insecure.entrypoints: web
+      traefik.http.routers.redis-local-insecure.service: redis
+      traefik.http.routers.redis-local-insecure.middlewares: redis-web-redirect
+      traefik.http.routers.redis-local.rule: Host(`redis.${LOCAL_DOMAIN}`)
+      traefik.http.routers.redis-local.entrypoints: websecure
+      traefik.http.routers.redis-local.service: redis
+      traefik.http.routers.redis-local.tls: true
+      runtipi.managed: true
