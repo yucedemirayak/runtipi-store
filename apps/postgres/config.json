@@ -31,7 +31,8 @@
       "max": 64,
       "min": 8,
       "required": true,
-      "env_variable": "TIPI_POSTGRES_PASSWORD"
+      "env_variable": "TIPI_POSTGRES_PASSWORD",
+      "default": "postgres"
     },
     {
       "type": "text",
