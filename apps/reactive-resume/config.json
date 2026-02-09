@@ -1,0 +1,145 @@
+{
+  "$schema": "../app-info-schema.json",
+  "name": "Reactive Resume",
+  "id": "reactive-resume",
+  "available": true,
+  "short_desc": "Open-source resume builder",
+  "author": "Amruth Pillai",
+  "port": 3010,
+  "categories": ["development", "utilities"],
+  "description": "Reactive Resume is a free and open-source resume builder that supports self-hosting.",
+  "tipi_version": 1,
+  "version": "v5.0.5",
+  "source": "https://github.com/AmruthPillai/Reactive-Resume",
+  "website": "https://rxresu.me/",
+  "exposable": true,
+  "dynamic_config": true,
+  "form_fields": [
+    {
+      "type": "text",
+      "label": "Public URL",
+      "required": false,
+      "env_variable": "TIPI_REACTIVE_RESUME_PUBLIC_URL",
+      "default": "http://192.168.1.125:3010"
+    },
+    {
+      "type": "text",
+      "label": "Storage URL",
+      "required": false,
+      "env_variable": "TIPI_REACTIVE_RESUME_STORAGE_URL",
+      "default": "http://192.168.1.125:8000/default"
+    },
+    {
+      "type": "text",
+      "label": "Database URL",
+      "required": false,
+      "env_variable": "TIPI_REACTIVE_RESUME_DATABASE_URL",
+      "default": "postgresql://postgres:postgres@postgres:5432/app"
+    },
+    {
+      "type": "text",
+      "label": "Redis URL",
+      "required": false,
+      "env_variable": "TIPI_REACTIVE_RESUME_REDIS_URL",
+      "default": "redis://default:redispass@redis:6379"
+    },
+    {
+      "type": "password",
+      "label": "Access Token Secret",
+      "required": false,
+      "min": 8,
+      "max": 128,
+      "env_variable": "TIPI_REACTIVE_RESUME_ACCESS_TOKEN_SECRET",
+      "default": "access_token_secret"
+    },
+    {
+      "type": "password",
+      "label": "Refresh Token Secret",
+      "required": false,
+      "min": 8,
+      "max": 128,
+      "env_variable": "TIPI_REACTIVE_RESUME_REFRESH_TOKEN_SECRET",
+      "default": "refresh_token_secret"
+    },
+    {
+      "type": "text",
+      "label": "Mail From",
+      "required": false,
+      "env_variable": "TIPI_REACTIVE_RESUME_MAIL_FROM",
+      "default": "noreply@localhost"
+    },
+    {
+      "type": "text",
+      "label": "Storage Endpoint",
+      "required": false,
+      "env_variable": "TIPI_REACTIVE_RESUME_STORAGE_ENDPOINT",
+      "default": "minio"
+    },
+    {
+      "type": "number",
+      "label": "Storage Port",
+      "required": false,
+      "env_variable": "TIPI_REACTIVE_RESUME_STORAGE_PORT",
+      "default": 9000,
+      "min": 1,
+      "max": 65535
+    },
+    {
+      "type": "text",
+      "label": "Storage Region",
+      "required": false,
+      "env_variable": "TIPI_REACTIVE_RESUME_STORAGE_REGION",
+      "default": "us-east-1"
+    },
+    {
+      "type": "text",
+      "label": "Storage Bucket",
+      "required": false,
+      "env_variable": "TIPI_REACTIVE_RESUME_STORAGE_BUCKET",
+      "default": "default"
+    },
+    {
+      "type": "text",
+      "label": "Storage Access Key",
+      "required": false,
+      "env_variable": "TIPI_REACTIVE_RESUME_STORAGE_ACCESS_KEY",
+      "default": "minioadmin"
+    },
+    {
+      "type": "password",
+      "label": "Storage Secret Key",
+      "required": false,
+      "min": 8,
+      "max": 128,
+      "env_variable": "TIPI_REACTIVE_RESUME_STORAGE_SECRET_KEY",
+      "default": "minioadmin"
+    },
+    {
+      "type": "boolean",
+      "label": "Storage Use SSL",
+      "required": false,
+      "env_variable": "TIPI_REACTIVE_RESUME_STORAGE_USE_SSL",
+      "default": false
+    },
+    {
+      "type": "text",
+      "label": "Chrome URL",
+      "required": false,
+      "env_variable": "TIPI_REACTIVE_RESUME_CHROME_URL",
+      "default": "ws://headless-chrome:3000"
+    },
+    {
+      "type": "password",
+      "label": "Chrome Token",
+      "required": false,
+      "min": 8,
+      "max": 128,
+      "env_variable": "TIPI_REACTIVE_RESUME_CHROME_TOKEN",
+      "default": "chrome_token"
+    }
+  ],
+  "supported_architectures": ["arm64", "amd64"],
+  "created_at": 1770666749000,
+  "updated_at": 1770666749000,
+  "min_tipi_version": "4.5.0"
+}

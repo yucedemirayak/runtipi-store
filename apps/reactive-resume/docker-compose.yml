@@ -1,0 +1,51 @@
+version: '3.8'
+services:
+  reactive-resume:
+    container_name: reactive-resume
+    image: amruthpillai/reactive-resume:v5.0.5
+    restart: unless-stopped
+    ports:
+      - ${APP_PORT}:3000
+    networks:
+      - tipi_main_network
+    environment:
+      - TZ=${TZ}
+      - PORT=3000
+      - NODE_ENV=production
+      - PUBLIC_URL=${TIPI_REACTIVE_RESUME_PUBLIC_URL}
+      - STORAGE_URL=${TIPI_REACTIVE_RESUME_STORAGE_URL}
+      - CHROME_TOKEN=${TIPI_REACTIVE_RESUME_CHROME_TOKEN}
+      - CHROME_URL=${TIPI_REACTIVE_RESUME_CHROME_URL}
+      - DATABASE_URL=${TIPI_REACTIVE_RESUME_DATABASE_URL}
+      - ACCESS_TOKEN_SECRET=${TIPI_REACTIVE_RESUME_ACCESS_TOKEN_SECRET}
+      - REFRESH_TOKEN_SECRET=${TIPI_REACTIVE_RESUME_REFRESH_TOKEN_SECRET}
+      - MAIL_FROM=${TIPI_REACTIVE_RESUME_MAIL_FROM}
+      - STORAGE_ENDPOINT=${TIPI_REACTIVE_RESUME_STORAGE_ENDPOINT}
+      - STORAGE_PORT=${TIPI_REACTIVE_RESUME_STORAGE_PORT}
+      - STORAGE_REGION=${TIPI_REACTIVE_RESUME_STORAGE_REGION}
+      - STORAGE_BUCKET=${TIPI_REACTIVE_RESUME_STORAGE_BUCKET}
+      - STORAGE_ACCESS_KEY=${TIPI_REACTIVE_RESUME_STORAGE_ACCESS_KEY}
+      - STORAGE_SECRET_KEY=${TIPI_REACTIVE_RESUME_STORAGE_SECRET_KEY}
+      - STORAGE_USE_SSL=${TIPI_REACTIVE_RESUME_STORAGE_USE_SSL}
+      - REDIS_URL=${TIPI_REACTIVE_RESUME_REDIS_URL}
+    labels:
+      traefik.enable: true
+      traefik.http.middlewares.reactive-resume-web-redirect.redirectscheme.scheme: https
+      traefik.http.services.reactive-resume.loadbalancer.server.port: 3000
+      traefik.http.routers.reactive-resume-insecure.rule: Host(`${APP_DOMAIN}`)
+      traefik.http.routers.reactive-resume-insecure.entrypoints: web
+      traefik.http.routers.reactive-resume-insecure.service: reactive-resume
+      traefik.http.routers.reactive-resume-insecure.middlewares: reactive-resume-web-redirect
+      traefik.http.routers.reactive-resume.rule: Host(`${APP_DOMAIN}`)
+      traefik.http.routers.reactive-resume.entrypoints: websecure
+      traefik.http.routers.reactive-resume.service: reactive-resume
+      traefik.http.routers.reactive-resume.tls.certresolver: myresolver
+      traefik.http.routers.reactive-resume-local-insecure.rule: Host(`reactive-resume.${LOCAL_DOMAIN}`)
+      traefik.http.routers.reactive-resume-local-insecure.entrypoints: web
+      traefik.http.routers.reactive-resume-local-insecure.service: reactive-resume
+      traefik.http.routers.reactive-resume-local-insecure.middlewares: reactive-resume-web-redirect
+      traefik.http.routers.reactive-resume-local.rule: Host(`reactive-resume.${LOCAL_DOMAIN}`)
+      traefik.http.routers.reactive-resume-local.entrypoints: websecure
+      traefik.http.routers.reactive-resume-local.service: reactive-resume
+      traefik.http.routers.reactive-resume-local.tls: true
+      runtipi.managed: true

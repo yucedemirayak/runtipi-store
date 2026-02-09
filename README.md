@@ -20,6 +20,7 @@ Kisisel Runtipi app-store reposu.
 - `mariadb`
 - `redis`
 - `headless-chrome`
+- `reactive-resume`
 
 ## Runtipi'ye ekleme
 
