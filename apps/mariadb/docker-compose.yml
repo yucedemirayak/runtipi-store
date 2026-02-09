@@ -1,0 +1,39 @@
+version: '3.8'
+services:
+  mariadb:
+    container_name: mariadb
+    image: mariadb:11.4
+    restart: unless-stopped
+    ports:
+      - ${APP_PORT}:3306
+    networks:
+      - tipi_main_network
+    environment:
+      - TZ=${TZ}
+      - MARIADB_ROOT_PASSWORD=${TIPI_MARIADB_ROOT_PASSWORD}
+      - MARIADB_DATABASE=${TIPI_MARIADB_DATABASE}
+      - MARIADB_USER=${TIPI_MARIADB_USER}
+      - MARIADB_PASSWORD=${TIPI_MARIADB_PASSWORD}
+    volumes:
+      - ${APP_DATA_DIR}/data:/var/lib/mysql
+    labels:
+      traefik.enable: true
+      traefik.http.middlewares.mariadb-web-redirect.redirectscheme.scheme: https
+      traefik.http.services.mariadb.loadbalancer.server.port: 3306
+      traefik.http.routers.mariadb-insecure.rule: Host(`${APP_DOMAIN}`)
+      traefik.http.routers.mariadb-insecure.entrypoints: web
+      traefik.http.routers.mariadb-insecure.service: mariadb
+      traefik.http.routers.mariadb-insecure.middlewares: mariadb-web-redirect
+      traefik.http.routers.mariadb.rule: Host(`${APP_DOMAIN}`)
+      traefik.http.routers.mariadb.entrypoints: websecure
+      traefik.http.routers.mariadb.service: mariadb
+      traefik.http.routers.mariadb.tls.certresolver: myresolver
+      traefik.http.routers.mariadb-local-insecure.rule: Host(`mariadb.${LOCAL_DOMAIN}`)
+      traefik.http.routers.mariadb-local-insecure.entrypoints: web
+      traefik.http.routers.mariadb-local-insecure.service: mariadb
+      traefik.http.routers.mariadb-local-insecure.middlewares: mariadb-web-redirect
+      traefik.http.routers.mariadb-local.rule: Host(`mariadb.${LOCAL_DOMAIN}`)
+      traefik.http.routers.mariadb-local.entrypoints: websecure
+      traefik.http.routers.mariadb-local.service: mariadb
+      traefik.http.routers.mariadb-local.tls: true
+      runtipi.managed: true

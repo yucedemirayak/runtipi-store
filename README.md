@@ -17,6 +17,7 @@ Kisisel Runtipi app-store reposu.
 
 - `cloudbeaver`
 - `postgres`
+- `mariadb`
 
 ## Runtipi'ye ekleme
 

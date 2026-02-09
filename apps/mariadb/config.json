@@ -1,0 +1,60 @@
+{
+  "$schema": "../app-info-schema.json",
+  "name": "MariaDB",
+  "id": "mariadb",
+  "available": true,
+  "short_desc": "Open-source relational database",
+  "author": "MariaDB Foundation",
+  "port": 3306,
+  "categories": ["development", "data"],
+  "description": "MariaDB is an open source relational database, compatible with MySQL.",
+  "tipi_version": 1,
+  "version": "11.4",
+  "source": "https://github.com/MariaDB/server",
+  "website": "https://mariadb.org/",
+  "exposable": true,
+  "dynamic_config": true,
+  "no_gui": true,
+  "form_fields": [
+    {
+      "type": "password",
+      "label": "Root Password",
+      "max": 64,
+      "min": 8,
+      "required": false,
+      "env_variable": "TIPI_MARIADB_ROOT_PASSWORD",
+      "default": "mariadbroot"
+    },
+    {
+      "type": "text",
+      "label": "Database Name",
+      "max": 64,
+      "min": 1,
+      "required": false,
+      "env_variable": "TIPI_MARIADB_DATABASE",
+      "default": "app"
+    },
+    {
+      "type": "text",
+      "label": "App Username",
+      "max": 64,
+      "min": 1,
+      "required": false,
+      "env_variable": "TIPI_MARIADB_USER",
+      "default": "mariadb"
+    },
+    {
+      "type": "password",
+      "label": "App User Password",
+      "max": 64,
+      "min": 8,
+      "required": false,
+      "env_variable": "TIPI_MARIADB_PASSWORD",
+      "default": "mariadbpass"
+    }
+  ],
+  "supported_architectures": ["arm64", "amd64"],
+  "created_at": 1770600000000,
+  "updated_at": 1770600000000,
+  "min_tipi_version": "4.5.0"
+}
