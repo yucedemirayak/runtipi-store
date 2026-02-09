@@ -22,7 +22,7 @@
       "max": 50,
       "min": 1,
       "required": true,
-      "env_variable": "POSTGRES_USER",
+      "env_variable": "TIPI_POSTGRES_USER",
       "default": "postgres"
     },
     {
@@ -31,7 +31,7 @@
       "max": 64,
       "min": 8,
       "required": true,
-      "env_variable": "POSTGRES_PASSWORD"
+      "env_variable": "TIPI_POSTGRES_PASSWORD"
     },
     {
       "type": "text",
@@ -39,7 +39,7 @@
       "max": 63,
       "min": 1,
       "required": true,
-      "env_variable": "POSTGRES_DB",
+      "env_variable": "TIPI_POSTGRES_DB",
       "default": "app"
     }
   ],

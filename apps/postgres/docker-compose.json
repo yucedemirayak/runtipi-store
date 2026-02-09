@@ -12,15 +12,15 @@
         },
         {
           "key": "POSTGRES_USER",
-          "value": "${POSTGRES_USER}"
+          "value": "${TIPI_POSTGRES_USER}"
         },
         {
           "key": "POSTGRES_PASSWORD",
-          "value": "${POSTGRES_PASSWORD}"
+          "value": "${TIPI_POSTGRES_PASSWORD}"
         },
         {
           "key": "POSTGRES_DB",
-          "value": "${POSTGRES_DB}"
+          "value": "${TIPI_POSTGRES_DB}"
         }
       ],
       "volumes": [
