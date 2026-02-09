@@ -1,0 +1,38 @@
+version: '3.8'
+services:
+  postgres:
+    container_name: postgres
+    image: postgres:17-alpine
+    restart: unless-stopped
+    ports:
+      - ${APP_PORT}:5432
+    networks:
+      - tipi_main_network
+    environment:
+      - TZ=${TZ}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+    volumes:
+      - ${APP_DATA_DIR}/data:/var/lib/postgresql/data
+    labels:
+      traefik.enable: true
+      traefik.http.middlewares.postgres-web-redirect.redirectscheme.scheme: https
+      traefik.http.services.postgres.loadbalancer.server.port: 5432
+      traefik.http.routers.postgres-insecure.rule: Host(`${APP_DOMAIN}`)
+      traefik.http.routers.postgres-insecure.entrypoints: web
+      traefik.http.routers.postgres-insecure.service: postgres
+      traefik.http.routers.postgres-insecure.middlewares: postgres-web-redirect
+      traefik.http.routers.postgres.rule: Host(`${APP_DOMAIN}`)
+      traefik.http.routers.postgres.entrypoints: websecure
+      traefik.http.routers.postgres.service: postgres
+      traefik.http.routers.postgres.tls.certresolver: myresolver
+      traefik.http.routers.postgres-local-insecure.rule: Host(`postgres.${LOCAL_DOMAIN}`)
+      traefik.http.routers.postgres-local-insecure.entrypoints: web
+      traefik.http.routers.postgres-local-insecure.service: postgres
+      traefik.http.routers.postgres-local-insecure.middlewares: postgres-web-redirect
+      traefik.http.routers.postgres-local.rule: Host(`postgres.${LOCAL_DOMAIN}`)
+      traefik.http.routers.postgres-local.entrypoints: websecure
+      traefik.http.routers.postgres-local.service: postgres
+      traefik.http.routers.postgres-local.tls: true
+      runtipi.managed: true

@@ -1,0 +1,50 @@
+{
+  "$schema": "../app-info-schema.json",
+  "name": "PostgreSQL",
+  "id": "postgres",
+  "available": true,
+  "short_desc": "Open-source relational database",
+  "author": "PostgreSQL Global Development Group",
+  "port": 5432,
+  "categories": ["development", "data"],
+  "description": "PostgreSQL is a powerful, open source object-relational database system.",
+  "tipi_version": 1,
+  "version": "17-alpine",
+  "source": "https://github.com/postgres/postgres",
+  "website": "https://www.postgresql.org/",
+  "exposable": true,
+  "dynamic_config": true,
+  "no_gui": true,
+  "form_fields": [
+    {
+      "type": "text",
+      "label": "Admin Username",
+      "max": 50,
+      "min": 1,
+      "required": true,
+      "env_variable": "POSTGRES_USER",
+      "default": "postgres"
+    },
+    {
+      "type": "password",
+      "label": "Admin Password",
+      "max": 64,
+      "min": 8,
+      "required": true,
+      "env_variable": "POSTGRES_PASSWORD"
+    },
+    {
+      "type": "text",
+      "label": "Database Name",
+      "max": 63,
+      "min": 1,
+      "required": true,
+      "env_variable": "POSTGRES_DB",
+      "default": "app"
+    }
+  ],
+  "supported_architectures": ["arm64", "amd64"],
+  "created_at": 1770594900000,
+  "updated_at": 1770594900000,
+  "min_tipi_version": "4.5.0"
+}
