@@ -19,6 +19,7 @@ Kisisel Runtipi app-store reposu.
 - `postgres`
 - `mariadb`
 - `redis`
+- `headless-chrome`
 
 ## Runtipi'ye ekleme
 

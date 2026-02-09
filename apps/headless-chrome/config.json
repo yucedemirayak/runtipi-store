@@ -1,0 +1,33 @@
+{
+  "$schema": "../app-info-schema.json",
+  "name": "Headless Chrome",
+  "id": "headless-chrome",
+  "available": true,
+  "short_desc": "Remote Chromium for PDF/render jobs",
+  "author": "Browserless",
+  "port": 3001,
+  "categories": ["development", "utilities"],
+  "description": "Browserless Chrome running in a separate container for automation, screenshots and PDF generation.",
+  "tipi_version": 1,
+  "version": "1.61.1-puppeteer-21.4.1",
+  "source": "https://github.com/browserless/browserless",
+  "website": "https://www.browserless.io/",
+  "exposable": true,
+  "dynamic_config": true,
+  "no_gui": true,
+  "form_fields": [
+    {
+      "type": "password",
+      "label": "Chrome Token",
+      "max": 128,
+      "min": 8,
+      "required": false,
+      "env_variable": "TIPI_HEADLESS_CHROME_TOKEN",
+      "default": "chrome_token"
+    }
+  ],
+  "supported_architectures": ["arm64", "amd64"],
+  "created_at": 1770666384000,
+  "updated_at": 1770666384000,
+  "min_tipi_version": "4.5.0"
+}

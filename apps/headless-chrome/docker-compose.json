@@ -1,0 +1,30 @@
+{
+  "services": [
+    {
+      "name": "headless-chrome",
+      "image": "browserless/chrome:1.61.1-puppeteer-21.4.1",
+      "isMain": true,
+      "internalPort": 3000,
+      "environment": [
+        {
+          "key": "TZ",
+          "value": "${TZ}"
+        },
+        {
+          "key": "TOKEN",
+          "value": "${TIPI_HEADLESS_CHROME_TOKEN}"
+        },
+        {
+          "key": "EXIT_ON_HEALTH_FAILURE",
+          "value": "true"
+        },
+        {
+          "key": "PRE_REQUEST_HEALTH_CHECK",
+          "value": "true"
+        }
+      ]
+    }
+  ],
+  "schemaVersion": 2,
+  "$schema": "https://schemas.runtipi.io/v2/dynamic-compose.json"
+}

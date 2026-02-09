@@ -1,0 +1,36 @@
+version: '3.8'
+services:
+  headless-chrome:
+    container_name: headless-chrome
+    image: browserless/chrome:1.61.1-puppeteer-21.4.1
+    restart: unless-stopped
+    ports:
+      - ${APP_PORT}:3000
+    networks:
+      - tipi_main_network
+    environment:
+      - TZ=${TZ}
+      - TOKEN=${TIPI_HEADLESS_CHROME_TOKEN}
+      - EXIT_ON_HEALTH_FAILURE=true
+      - PRE_REQUEST_HEALTH_CHECK=true
+    labels:
+      traefik.enable: true
+      traefik.http.middlewares.headless-chrome-web-redirect.redirectscheme.scheme: https
+      traefik.http.services.headless-chrome.loadbalancer.server.port: 3000
+      traefik.http.routers.headless-chrome-insecure.rule: Host(`${APP_DOMAIN}`)
+      traefik.http.routers.headless-chrome-insecure.entrypoints: web
+      traefik.http.routers.headless-chrome-insecure.service: headless-chrome
+      traefik.http.routers.headless-chrome-insecure.middlewares: headless-chrome-web-redirect
+      traefik.http.routers.headless-chrome.rule: Host(`${APP_DOMAIN}`)
+      traefik.http.routers.headless-chrome.entrypoints: websecure
+      traefik.http.routers.headless-chrome.service: headless-chrome
+      traefik.http.routers.headless-chrome.tls.certresolver: myresolver
+      traefik.http.routers.headless-chrome-local-insecure.rule: Host(`headless-chrome.${LOCAL_DOMAIN}`)
+      traefik.http.routers.headless-chrome-local-insecure.entrypoints: web
+      traefik.http.routers.headless-chrome-local-insecure.service: headless-chrome
+      traefik.http.routers.headless-chrome-local-insecure.middlewares: headless-chrome-web-redirect
+      traefik.http.routers.headless-chrome-local.rule: Host(`headless-chrome.${LOCAL_DOMAIN}`)
+      traefik.http.routers.headless-chrome-local.entrypoints: websecure
+      traefik.http.routers.headless-chrome-local.service: headless-chrome
+      traefik.http.routers.headless-chrome-local.tls: true
+      runtipi.managed: true
