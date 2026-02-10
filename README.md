@@ -21,6 +21,7 @@ Kisisel Runtipi app-store reposu.
 - `redis`
 - `headless-chrome`
 - `reactive-resume`
+- `wordpress`
 
 ## Runtipi'ye ekleme
 

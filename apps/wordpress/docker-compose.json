@@ -1,0 +1,48 @@
+{
+  "services": [
+    {
+      "name": "wordpress",
+      "image": "wordpress:php8.3-apache",
+      "isMain": true,
+      "internalPort": 80,
+      "environment": [
+        {
+          "key": "TZ",
+          "value": "${TZ}"
+        },
+        {
+          "key": "WORDPRESS_DB_HOST",
+          "value": "${TIPI_WORDPRESS_DB_HOST}"
+        },
+        {
+          "key": "WORDPRESS_DB_USER",
+          "value": "${TIPI_WORDPRESS_DB_USER}"
+        },
+        {
+          "key": "WORDPRESS_DB_PASSWORD",
+          "value": "${TIPI_WORDPRESS_DB_PASSWORD}"
+        },
+        {
+          "key": "WORDPRESS_DB_NAME",
+          "value": "${TIPI_WORDPRESS_DB_NAME}"
+        },
+        {
+          "key": "WORDPRESS_TABLE_PREFIX",
+          "value": "${TIPI_WORDPRESS_TABLE_PREFIX}"
+        },
+        {
+          "key": "WORDPRESS_DEBUG",
+          "value": "${TIPI_WORDPRESS_DEBUG}"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data",
+          "containerPath": "/var/www/html"
+        }
+      ]
+    }
+  ],
+  "schemaVersion": 2,
+  "$schema": "https://schemas.runtipi.io/v2/dynamic-compose.json"
+}

@@ -1,0 +1,41 @@
+version: '3.8'
+services:
+  wordpress:
+    container_name: wordpress
+    image: wordpress:php8.3-apache
+    restart: unless-stopped
+    ports:
+      - ${APP_PORT}:80
+    networks:
+      - tipi_main_network
+    environment:
+      - TZ=${TZ}
+      - WORDPRESS_DB_HOST=${TIPI_WORDPRESS_DB_HOST}
+      - WORDPRESS_DB_USER=${TIPI_WORDPRESS_DB_USER}
+      - WORDPRESS_DB_PASSWORD=${TIPI_WORDPRESS_DB_PASSWORD}
+      - WORDPRESS_DB_NAME=${TIPI_WORDPRESS_DB_NAME}
+      - WORDPRESS_TABLE_PREFIX=${TIPI_WORDPRESS_TABLE_PREFIX}
+      - WORDPRESS_DEBUG=${TIPI_WORDPRESS_DEBUG}
+    volumes:
+      - ${APP_DATA_DIR}/data:/var/www/html
+    labels:
+      traefik.enable: true
+      traefik.http.middlewares.wordpress-web-redirect.redirectscheme.scheme: https
+      traefik.http.services.wordpress.loadbalancer.server.port: 80
+      traefik.http.routers.wordpress-insecure.rule: Host(`${APP_DOMAIN}`)
+      traefik.http.routers.wordpress-insecure.entrypoints: web
+      traefik.http.routers.wordpress-insecure.service: wordpress
+      traefik.http.routers.wordpress-insecure.middlewares: wordpress-web-redirect
+      traefik.http.routers.wordpress.rule: Host(`${APP_DOMAIN}`)
+      traefik.http.routers.wordpress.entrypoints: websecure
+      traefik.http.routers.wordpress.service: wordpress
+      traefik.http.routers.wordpress.tls.certresolver: myresolver
+      traefik.http.routers.wordpress-local-insecure.rule: Host(`wordpress.${LOCAL_DOMAIN}`)
+      traefik.http.routers.wordpress-local-insecure.entrypoints: web
+      traefik.http.routers.wordpress-local-insecure.service: wordpress
+      traefik.http.routers.wordpress-local-insecure.middlewares: wordpress-web-redirect
+      traefik.http.routers.wordpress-local.rule: Host(`wordpress.${LOCAL_DOMAIN}`)
+      traefik.http.routers.wordpress-local.entrypoints: websecure
+      traefik.http.routers.wordpress-local.service: wordpress
+      traefik.http.routers.wordpress-local.tls: true
+      runtipi.managed: true

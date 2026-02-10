@@ -1,0 +1,73 @@
+{
+  "$schema": "../app-info-schema.json",
+  "name": "WordPress",
+  "id": "wordpress",
+  "available": true,
+  "short_desc": "Popular CMS and blog platform",
+  "author": "WordPress.org",
+  "port": 8088,
+  "categories": ["utilities", "development"],
+  "description": "WordPress is a popular open-source content management system for websites and blogs.",
+  "tipi_version": 1,
+  "version": "php8.3-apache",
+  "source": "https://github.com/WordPress/WordPress",
+  "website": "https://wordpress.org/",
+  "exposable": true,
+  "dynamic_config": true,
+  "form_fields": [
+    {
+      "type": "text",
+      "label": "Database Host",
+      "required": false,
+      "env_variable": "TIPI_WORDPRESS_DB_HOST",
+      "default": "mariadb:3306"
+    },
+    {
+      "type": "text",
+      "label": "Database Name",
+      "max": 64,
+      "min": 1,
+      "required": false,
+      "env_variable": "TIPI_WORDPRESS_DB_NAME",
+      "default": "app"
+    },
+    {
+      "type": "text",
+      "label": "Database User",
+      "max": 64,
+      "min": 1,
+      "required": false,
+      "env_variable": "TIPI_WORDPRESS_DB_USER",
+      "default": "mariadb"
+    },
+    {
+      "type": "password",
+      "label": "Database Password",
+      "max": 64,
+      "min": 1,
+      "required": false,
+      "env_variable": "TIPI_WORDPRESS_DB_PASSWORD",
+      "default": "mariadbpass"
+    },
+    {
+      "type": "text",
+      "label": "Table Prefix",
+      "max": 16,
+      "min": 1,
+      "required": false,
+      "env_variable": "TIPI_WORDPRESS_TABLE_PREFIX",
+      "default": "wp_"
+    },
+    {
+      "type": "boolean",
+      "label": "Enable Debug Mode",
+      "required": false,
+      "env_variable": "TIPI_WORDPRESS_DEBUG",
+      "default": false
+    }
+  ],
+  "supported_architectures": ["arm64", "amd64"],
+  "created_at": 1770737025000,
+  "updated_at": 1770737025000,
+  "min_tipi_version": "4.5.0"
+}
