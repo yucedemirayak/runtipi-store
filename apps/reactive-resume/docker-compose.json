@@ -11,76 +11,62 @@
           "value": "${TZ}"
         },
         {
-          "key": "PORT",
-          "value": "3000"
-        },
-        {
           "key": "NODE_ENV",
           "value": "production"
         },
         {
-          "key": "PUBLIC_URL",
+          "key": "APP_URL",
           "value": "${TIPI_REACTIVE_RESUME_PUBLIC_URL}"
         },
         {
-          "key": "STORAGE_URL",
-          "value": "${TIPI_REACTIVE_RESUME_STORAGE_URL}"
+          "key": "PRINTER_APP_URL",
+          "value": "http://reactive-resume:3000"
         },
         {
-          "key": "CHROME_TOKEN",
-          "value": "${TIPI_REACTIVE_RESUME_CHROME_TOKEN}"
-        },
-        {
-          "key": "CHROME_URL",
-          "value": "${TIPI_REACTIVE_RESUME_CHROME_URL}"
+          "key": "PRINTER_ENDPOINT",
+          "value": "${TIPI_REACTIVE_RESUME_CHROME_URL}?token=${TIPI_REACTIVE_RESUME_CHROME_TOKEN}"
         },
         {
           "key": "DATABASE_URL",
           "value": "${TIPI_REACTIVE_RESUME_DATABASE_URL}"
         },
         {
-          "key": "ACCESS_TOKEN_SECRET",
+          "key": "AUTH_SECRET",
           "value": "${TIPI_REACTIVE_RESUME_ACCESS_TOKEN_SECRET}"
         },
         {
-          "key": "REFRESH_TOKEN_SECRET",
-          "value": "${TIPI_REACTIVE_RESUME_REFRESH_TOKEN_SECRET}"
-        },
-        {
-          "key": "MAIL_FROM",
+          "key": "SMTP_FROM",
           "value": "${TIPI_REACTIVE_RESUME_MAIL_FROM}"
         },
         {
-          "key": "STORAGE_ENDPOINT",
-          "value": "${TIPI_REACTIVE_RESUME_STORAGE_ENDPOINT}"
+          "key": "S3_ENDPOINT",
+          "value": "http://${TIPI_REACTIVE_RESUME_STORAGE_ENDPOINT}:${TIPI_REACTIVE_RESUME_STORAGE_PORT}"
         },
         {
-          "key": "STORAGE_PORT",
-          "value": "${TIPI_REACTIVE_RESUME_STORAGE_PORT}"
-        },
-        {
-          "key": "STORAGE_REGION",
+          "key": "S3_REGION",
           "value": "${TIPI_REACTIVE_RESUME_STORAGE_REGION}"
         },
         {
-          "key": "STORAGE_BUCKET",
+          "key": "S3_BUCKET",
           "value": "${TIPI_REACTIVE_RESUME_STORAGE_BUCKET}"
         },
         {
-          "key": "STORAGE_ACCESS_KEY",
+          "key": "S3_ACCESS_KEY_ID",
           "value": "${TIPI_REACTIVE_RESUME_STORAGE_ACCESS_KEY}"
         },
         {
-          "key": "STORAGE_SECRET_KEY",
+          "key": "S3_SECRET_ACCESS_KEY",
           "value": "${TIPI_REACTIVE_RESUME_STORAGE_SECRET_KEY}"
         },
         {
-          "key": "STORAGE_USE_SSL",
-          "value": "${TIPI_REACTIVE_RESUME_STORAGE_USE_SSL}"
-        },
+          "key": "S3_FORCE_PATH_STYLE",
+          "value": "true"
+        }
+      ],
+      "volumes": [
         {
-          "key": "REDIS_URL",
-          "value": "${TIPI_REACTIVE_RESUME_REDIS_URL}"
+          "hostPath": "${APP_DATA_DIR}/data",
+          "containerPath": "/app/data"
         }
       ]
     }

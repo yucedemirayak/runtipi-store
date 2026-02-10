@@ -1,23 +1,23 @@
 # Reactive Resume
 
-Reactive Resume with external dependencies.
+Reactive Resume (v5) configured to use external services.
 
-## Expected external services (already installed)
+## Expected external services
 
 - PostgreSQL
-- Redis
-- MinIO
+- MinIO (S3 compatible storage)
 - Headless Chrome (Browserless)
 
 ## Defaults in this app
 
-Defaults are aligned with your existing app defaults:
+Defaults are aligned with your current setup:
 
 - PostgreSQL: `postgresql://postgres:postgres@postgres:5432/app`
-- Redis: `redis://default:redispass@redis:6379`
+- MinIO endpoint: `http://minio:9000`
 - MinIO access: `minioadmin / minioadmin`
-- Chrome token: `chrome_token`
+- MinIO bucket: `default`
+- Printer endpoint: `ws://headless-chrome:3000?token=chrome_token`
 
 ## Important
 
-If you access the app from a different hostname/port, set `Public URL` and `Storage URL` accordingly.
+If you access the app from a different hostname/port, set `Public URL` accordingly.
