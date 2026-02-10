@@ -60,15 +60,6 @@
       "required": false,
       "env_variable": "TIPI_YUCE_SITE_START_CMD",
       "default": "pnpm start"
-    },
-    {
-      "type": "number",
-      "label": "Webhook Port",
-      "required": false,
-      "env_variable": "TIPI_YUCE_SITE_WEBHOOK_PORT",
-      "default": 5000,
-      "min": 1,
-      "max": 65535
     }
   ],
   "supported_architectures": ["amd64", "arm64"],

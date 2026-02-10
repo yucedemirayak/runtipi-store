@@ -7,7 +7,7 @@ services:
     command: ["/bin/sh", "/scripts/bootstrap.sh"]
     restart: unless-stopped
     ports:
-      - ${TIPI_YUCE_SITE_WEBHOOK_PORT}:5000
+      - 5000:5000
       - ${APP_PORT}:3000
     networks:
       - tipi_main_network

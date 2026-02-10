@@ -11,7 +11,7 @@ Container that runs `git pull`, `pnpm install`, `pnpm build` and your start comm
 ## Ports
 
 - App: `${APP_PORT}` -> container `3000`
-- Webhook: `${TIPI_YUCE_SITE_WEBHOOK_PORT}` -> container `5000`
+- Webhook: `5000` -> container `5000`
 
 ## Notes
 
