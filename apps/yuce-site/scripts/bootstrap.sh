@@ -23,17 +23,26 @@ REPO_URL="${REPO_URL:-https://github.com/yucedemirayak/yucedemirayak.com-next.gi
 REPO_BRANCH="${REPO_BRANCH:-master}"
 APP_START_CMD="${APP_START_CMD:-pnpm start}"
 
+AUTH_REPO_URL="${REPO_URL}"
+case "${REPO_URL}" in
+  https://github.com/*)
+    # Use PAT over HTTPS for git clone/fetch on GitHub.
+    AUTH_REPO_URL="$(printf '%s' "${REPO_URL}" | sed "s#^https://github.com/#https://x-access-token:${GITHUB_TOKEN}@github.com/#")"
+    ;;
+esac
+
 mkdir -p "${PROJECT_DIR}"
 
 if [ ! -d "${PROJECT_DIR}/.git" ]; then
   echo "[yuce-site] Cloning repository..."
-  git -c "http.extraHeader=Authorization: Bearer ${GITHUB_TOKEN}" \
-    clone --depth=1 -b "${REPO_BRANCH}" "${REPO_URL}" "${PROJECT_DIR}"
+  git clone --depth=1 -b "${REPO_BRANCH}" "${AUTH_REPO_URL}" "${PROJECT_DIR}"
+  git -C "${PROJECT_DIR}" remote set-url origin "${REPO_URL}"
 else
   echo "[yuce-site] Pulling repository..."
-  git -C "${PROJECT_DIR}" fetch --all --prune
-  git -C "${PROJECT_DIR}" checkout "${REPO_BRANCH}"
-  git -C "${PROJECT_DIR}" -c "http.extraHeader=Authorization: Bearer ${GITHUB_TOKEN}" pull --ff-only
+  git -C "${PROJECT_DIR}" remote set-url origin "${AUTH_REPO_URL}"
+  git -C "${PROJECT_DIR}" fetch --prune origin "${REPO_BRANCH}"
+  git -C "${PROJECT_DIR}" checkout -B "${REPO_BRANCH}" "origin/${REPO_BRANCH}"
+  git -C "${PROJECT_DIR}" remote set-url origin "${REPO_URL}"
 fi
 
 cd "${PROJECT_DIR}"

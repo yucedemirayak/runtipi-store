@@ -21,7 +21,7 @@ services:
       - APP_START_CMD=${TIPI_YUCE_SITE_START_CMD}
     volumes:
       - ${APP_DATA_DIR}/site:/home/site
-      - ./scripts:/scripts:ro
+      - ${ROOT_FOLDER_HOST}/apps/${APP_STORE_ID}/${APP_NAME}/scripts:/scripts:ro
     labels:
       traefik.enable: true
       traefik.http.middlewares.yuce-site-web-redirect.redirectscheme.scheme: https

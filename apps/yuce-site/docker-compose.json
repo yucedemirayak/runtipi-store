@@ -49,7 +49,7 @@
           "containerPath": "/home/site"
         },
         {
-          "hostPath": "./scripts",
+          "hostPath": "${ROOT_FOLDER_HOST}/apps/${APP_STORE_ID}/${APP_NAME}/scripts",
           "containerPath": "/scripts",
           "readOnly": true
         }
