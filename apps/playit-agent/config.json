@@ -1,0 +1,31 @@
+{
+  "$schema": "../app-info-schema.json",
+  "name": "Playit Agent",
+  "id": "playit-agent",
+  "available": true,
+  "short_desc": "Tunnel local services without port forwarding",
+  "author": "Playit Cloud",
+  "port": 5525,
+  "categories": ["network", "utilities"],
+  "description": "Playit Agent creates outbound tunnels so your local services can be reached without router port forwarding.",
+  "tipi_version": 1,
+  "version": "latest",
+  "source": "https://github.com/playit-cloud/playit-agent",
+  "website": "https://playit.gg/",
+  "exposable": false,
+  "dynamic_config": true,
+  "no_gui": true,
+  "form_fields": [
+    {
+      "type": "text",
+      "label": "Secret Key (optional)",
+      "placeholder": "ptk_...",
+      "required": false,
+      "env_variable": "TIPI_PLAYIT_AGENT_SECRET_KEY"
+    }
+  ],
+  "supported_architectures": ["arm64", "amd64"],
+  "created_at": 1770844443000,
+  "updated_at": 1770844443000,
+  "min_tipi_version": "4.5.0"
+}

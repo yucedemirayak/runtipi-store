@@ -1,0 +1,24 @@
+version: '3.9'
+services:
+  playit-agent:
+    container_name: playit-agent
+    image: ghcr.io/playit-cloud/playit-agent:latest
+    restart: unless-stopped
+    network_mode: host
+    environment:
+      - SECRET_KEY=${TIPI_PLAYIT_AGENT_SECRET_KEY}
+    command:
+      - /bin/sh
+      - -lc
+      - |
+        if [ -n "${SECRET_KEY}" ]; then
+          exec playit -s --secret "${SECRET_KEY}" --platform_docker start
+        elif [ -f /root/.config/playit_gg/playit.toml ]; then
+          exec playit -s --secret_path /root/.config/playit_gg/playit.toml --platform_docker start
+        else
+          exec playit -s setup
+        fi
+    volumes:
+      - ${APP_DATA_DIR}/data:/root/.config/playit_gg
+    labels:
+      runtipi.managed: true

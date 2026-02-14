@@ -1,0 +1,29 @@
+{
+  "services": [
+    {
+      "name": "playit-agent",
+      "image": "ghcr.io/playit-cloud/playit-agent:latest",
+      "isMain": true,
+      "networkMode": "host",
+      "environment": [
+        {
+          "key": "SECRET_KEY",
+          "value": "${TIPI_PLAYIT_AGENT_SECRET_KEY}"
+        }
+      ],
+      "command": [
+        "/bin/sh",
+        "-lc",
+        "if [ -n \"${SECRET_KEY}\" ]; then exec playit -s --secret \"${SECRET_KEY}\" --platform_docker start; elif [ -f /root/.config/playit_gg/playit.toml ]; then exec playit -s --secret_path /root/.config/playit_gg/playit.toml --platform_docker start; else exec playit -s setup; fi"
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data",
+          "containerPath": "/root/.config/playit_gg"
+        }
+      ]
+    }
+  ],
+  "schemaVersion": 2,
+  "$schema": "https://schemas.runtipi.io/v2/dynamic-compose.json"
+}
