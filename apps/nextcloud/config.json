@@ -17,11 +17,21 @@
   "website": "https://nextcloud.com/",
   "exposable": true,
   "dynamic_config": true,
+  "form_fields": [
+    {
+      "type": "text",
+      "label": "Trusted Domains",
+      "required": false,
+      "env_variable": "TIPI_NEXTCLOUD_TRUSTED_DOMAINS",
+      "default": "",
+      "placeholder": "example.com nextcloud.example.com *.example.com"
+    }
+  ],
   "supported_architectures": [
     "arm64",
     "amd64"
   ],
   "created_at": 1771179876222,
-  "updated_at": 1771183204623,
+  "updated_at": 1771183295537,
   "min_tipi_version": "4.5.1"
 }
