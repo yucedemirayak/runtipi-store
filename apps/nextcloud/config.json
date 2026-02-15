@@ -10,28 +10,18 @@
     "utilities",
     "data"
   ],
-  "description": "A self-hosted private cloud for files, calendars, contacts, chat, and collaboration. Includes Runtipi defaults for trusted domains and setup credentials.",
+  "description": "A self-hosted private cloud for files, calendars, contacts, chat, and collaboration.",
   "tipi_version": 1,
   "version": "29-apache",
   "source": "https://github.com/nextcloud/docker",
   "website": "https://nextcloud.com/",
   "exposable": true,
   "dynamic_config": true,
-  "form_fields": [
-    {
-      "type": "text",
-      "label": "Trusted Domains",
-      "required": false,
-      "env_variable": "TIPI_NEXTCLOUD_TRUSTED_DOMAINS",
-      "default": "",
-      "placeholder": "example.com nextcloud.example.com *.example.com"
-    }
-  ],
   "supported_architectures": [
     "arm64",
     "amd64"
   ],
   "created_at": 1771179876222,
-  "updated_at": 1771183295537,
+  "updated_at": 1771184436658,
   "min_tipi_version": "4.5.1"
 }
