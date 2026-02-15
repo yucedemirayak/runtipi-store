@@ -47,7 +47,7 @@ services:
           set +f
         fi
 
-        wait "$NEXTCLOUD_PID"
+        wait "$$NEXTCLOUD_PID"
     labels:
       # Main
       traefik.enable: true
