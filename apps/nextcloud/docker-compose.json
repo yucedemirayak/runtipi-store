@@ -1,0 +1,48 @@
+{
+  "services": [
+    {
+      "name": "nextcloud",
+      "image": "nextcloud:29-apache",
+      "isMain": true,
+      "internalPort": 80,
+      "environment": [
+        {
+          "key": "TZ",
+          "value": "${TZ}"
+        },
+        {
+          "key": "POSTGRES_HOST",
+          "value": "${TIPI_NEXTCLOUD_DB_HOST}"
+        },
+        {
+          "key": "POSTGRES_DB",
+          "value": "${TIPI_NEXTCLOUD_DB_NAME}"
+        },
+        {
+          "key": "POSTGRES_USER",
+          "value": "${TIPI_NEXTCLOUD_DB_USER}"
+        },
+        {
+          "key": "POSTGRES_PASSWORD",
+          "value": "${TIPI_NEXTCLOUD_DB_PASSWORD}"
+        },
+        {
+          "key": "NEXTCLOUD_ADMIN_USER",
+          "value": "${TIPI_NEXTCLOUD_ADMIN_USER}"
+        },
+        {
+          "key": "NEXTCLOUD_ADMIN_PASSWORD",
+          "value": "${TIPI_NEXTCLOUD_ADMIN_PASSWORD}"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data",
+          "containerPath": "/var/www/html"
+        }
+      ]
+    }
+  ],
+  "schemaVersion": 2,
+  "$schema": "https://schemas.runtipi.io/v2/dynamic-compose.json"
+}
