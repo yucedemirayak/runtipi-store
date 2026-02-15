@@ -6,7 +6,10 @@
   "short_desc": "Remote Chromium for PDF/render jobs",
   "author": "Browserless",
   "port": 3001,
-  "categories": ["development", "utilities"],
+  "categories": [
+    "development",
+    "utilities"
+  ],
   "description": "Browserless Chrome running in a separate container for automation, screenshots and PDF generation.",
   "tipi_version": 1,
   "version": "1.61.1-puppeteer-21.4.1",
@@ -26,8 +29,11 @@
       "default": "chrome_token"
     }
   ],
-  "supported_architectures": ["arm64", "amd64"],
-  "created_at": 1770666384000,
-  "updated_at": 1770666384000,
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1771179271821,
+  "updated_at": 1771179271821,
   "min_tipi_version": "4.5.0"
 }

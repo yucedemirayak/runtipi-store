@@ -8,16 +8,22 @@
   "id": "cloudbeaver",
   "tipi_version": 1,
   "version": "latest",
-  "categories": ["development", "data"],
+  "categories": [
+    "development",
+    "data"
+  ],
   "description": "Cloud Database Manager. Web interface for DB administration by DBeaver.",
   "short_desc": "Web-based database manager",
   "author": "DBeaver Corp",
   "website": "https://dbeaver.io/cloudbeaver/",
   "source": "https://github.com/dbeaver/cloudbeaver",
   "form_fields": [],
-  "supported_architectures": ["arm64", "amd64"],
-  "created_at": 1770593700000,
-  "updated_at": 1770593700000,
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1771179271821,
+  "updated_at": 1771179271821,
   "force_pull": true,
   "min_tipi_version": "4.5.0"
 }

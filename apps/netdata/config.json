@@ -6,7 +6,11 @@
   "short_desc": "Real-time systems monitoring dashboard",
   "author": "Netdata OSS",
   "port": 19999,
-  "categories": ["utilities", "network", "data"],
+  "categories": [
+    "utilities",
+    "network",
+    "data"
+  ],
   "description": "Netdata provides live metrics, insights and alerts for Linux systems and containers with a responsive web dashboard.",
   "tipi_version": 1,
   "version": "stable",
@@ -14,8 +18,11 @@
   "website": "https://www.netdata.cloud/",
   "exposable": true,
   "dynamic_config": true,
-  "supported_architectures": ["arm64", "amd64"],
-  "created_at": 1771157462824,
-  "updated_at": 1771157462824,
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1771179271821,
+  "updated_at": 1771179271821,
   "min_tipi_version": "4.5.0"
 }

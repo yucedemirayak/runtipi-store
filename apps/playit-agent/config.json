@@ -6,7 +6,10 @@
   "short_desc": "Tunnel local services without port forwarding",
   "author": "Playit Cloud",
   "port": 5525,
-  "categories": ["network", "utilities"],
+  "categories": [
+    "network",
+    "utilities"
+  ],
   "description": "Playit Agent creates outbound tunnels so your local services can be reached without router port forwarding.",
   "tipi_version": 1,
   "version": "latest",
@@ -24,8 +27,11 @@
       "env_variable": "TIPI_PLAYIT_AGENT_SECRET_KEY"
     }
   ],
-  "supported_architectures": ["arm64", "amd64"],
-  "created_at": 1770844443000,
-  "updated_at": 1770844443000,
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1771179271821,
+  "updated_at": 1771179271821,
   "min_tipi_version": "4.5.0"
 }

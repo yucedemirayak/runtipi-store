@@ -6,7 +6,10 @@
   "short_desc": "Open-source resume builder",
   "author": "Amruth Pillai",
   "port": 3010,
-  "categories": ["development", "utilities"],
+  "categories": [
+    "development",
+    "utilities"
+  ],
   "description": "Reactive Resume is a free and open-source resume builder that supports self-hosting.",
   "tipi_version": 1,
   "version": "v5.0.5",
@@ -138,8 +141,11 @@
       "default": "chrome_token"
     }
   ],
-  "supported_architectures": ["arm64", "amd64"],
-  "created_at": 1770666749000,
-  "updated_at": 1770666749000,
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1771179271821,
+  "updated_at": 1771179271821,
   "min_tipi_version": "4.5.0"
 }

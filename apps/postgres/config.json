@@ -6,7 +6,10 @@
   "short_desc": "Open-source relational database",
   "author": "PostgreSQL Global Development Group",
   "port": 5432,
-  "categories": ["development", "data"],
+  "categories": [
+    "development",
+    "data"
+  ],
   "description": "PostgreSQL is a powerful, open source object-relational database system.",
   "tipi_version": 1,
   "version": "17-alpine",
@@ -44,8 +47,11 @@
       "default": "app"
     }
   ],
-  "supported_architectures": ["arm64", "amd64"],
-  "created_at": 1770594900000,
-  "updated_at": 1770594900000,
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1771179271821,
+  "updated_at": 1771179271821,
   "min_tipi_version": "4.5.0"
 }

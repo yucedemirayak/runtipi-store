@@ -6,7 +6,10 @@
   "short_desc": "Open-source relational database",
   "author": "MariaDB Foundation",
   "port": 3306,
-  "categories": ["development", "data"],
+  "categories": [
+    "development",
+    "data"
+  ],
   "description": "MariaDB is an open source relational database, compatible with MySQL.",
   "tipi_version": 1,
   "version": "11.4",
@@ -53,8 +56,11 @@
       "default": "mariadbpass"
     }
   ],
-  "supported_architectures": ["arm64", "amd64"],
-  "created_at": 1770599000000,
-  "updated_at": 1770599000000,
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1771179271821,
+  "updated_at": 1771179271821,
   "min_tipi_version": "4.5.0"
 }

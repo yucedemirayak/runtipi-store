@@ -6,7 +6,10 @@
   "short_desc": "In-memory key-value data store",
   "author": "Redis Ltd.",
   "port": 6379,
-  "categories": ["development", "data"],
+  "categories": [
+    "development",
+    "data"
+  ],
   "description": "Redis is an in-memory data structure store used as a database, cache, and message broker.",
   "tipi_version": 1,
   "version": "7.4-alpine",
@@ -26,8 +29,11 @@
       "default": "redispass"
     }
   ],
-  "supported_architectures": ["arm64", "amd64"],
-  "created_at": 1770665645000,
-  "updated_at": 1770665645000,
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1771179271821,
+  "updated_at": 1771179271821,
   "min_tipi_version": "4.5.0"
 }

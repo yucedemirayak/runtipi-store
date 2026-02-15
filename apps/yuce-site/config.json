@@ -6,7 +6,10 @@
   "short_desc": "Self-updating web app from Git webhook",
   "author": "yucedemirayak",
   "port": 4000,
-  "categories": ["development", "utilities"],
+  "categories": [
+    "development",
+    "utilities"
+  ],
   "description": "Clones your repo, builds with pnpm, serves on port 3000 and rebuilds on signed GitHub webhooks.",
   "tipi_version": 1,
   "version": "node-20-alpine",
@@ -62,8 +65,11 @@
       "default": "pnpm start"
     }
   ],
-  "supported_architectures": ["amd64", "arm64"],
-  "created_at": 1770745852010,
-  "updated_at": 1770745852010,
+  "supported_architectures": [
+    "amd64",
+    "arm64"
+  ],
+  "created_at": 1771179271821,
+  "updated_at": 1771179271821,
   "min_tipi_version": "4.5.0"
 }
