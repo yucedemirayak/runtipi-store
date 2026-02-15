@@ -33,6 +33,10 @@
         {
           "key": "NEXTCLOUD_ADMIN_PASSWORD",
           "value": "${TIPI_NEXTCLOUD_ADMIN_PASSWORD}"
+        },
+        {
+          "key": "NEXTCLOUD_TRUSTED_DOMAINS",
+          "value": "${TIPI_NEXTCLOUD_TRUSTED_DOMAINS}"
         }
       ],
       "volumes": [

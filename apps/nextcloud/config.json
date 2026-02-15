@@ -69,13 +69,21 @@
       "required": false,
       "env_variable": "TIPI_NEXTCLOUD_ADMIN_PASSWORD",
       "default": "change-me-now"
+    },
+    {
+      "type": "text",
+      "label": "Trusted Domains",
+      "required": false,
+      "env_variable": "TIPI_NEXTCLOUD_TRUSTED_DOMAINS",
+      "default": "",
+      "placeholder": "example.com nextcloud.example.com *.example.com"
     }
   ],
   "supported_architectures": [
     "arm64",
     "amd64"
   ],
-  "created_at": 1771179271821,
-  "updated_at": 1771179271821,
+  "created_at": 1771179876222,
+  "updated_at": 1771179876222,
   "min_tipi_version": "4.5.0"
 }
