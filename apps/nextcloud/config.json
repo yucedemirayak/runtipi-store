@@ -20,40 +20,6 @@
   "form_fields": [
     {
       "type": "text",
-      "label": "Database Host",
-      "required": false,
-      "env_variable": "TIPI_NEXTCLOUD_DB_HOST",
-      "default": "postgres"
-    },
-    {
-      "type": "text",
-      "label": "Database Name",
-      "max": 63,
-      "min": 1,
-      "required": false,
-      "env_variable": "TIPI_NEXTCLOUD_DB_NAME",
-      "default": "app"
-    },
-    {
-      "type": "text",
-      "label": "Database User",
-      "max": 63,
-      "min": 1,
-      "required": false,
-      "env_variable": "TIPI_NEXTCLOUD_DB_USER",
-      "default": "postgres"
-    },
-    {
-      "type": "password",
-      "label": "Database Password",
-      "max": 64,
-      "min": 8,
-      "required": false,
-      "env_variable": "TIPI_NEXTCLOUD_DB_PASSWORD",
-      "default": "postgres"
-    },
-    {
-      "type": "text",
       "label": "Admin Username",
       "max": 50,
       "min": 1,

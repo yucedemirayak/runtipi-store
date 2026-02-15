@@ -12,19 +12,19 @@
         },
         {
           "key": "POSTGRES_HOST",
-          "value": "${TIPI_NEXTCLOUD_DB_HOST}"
+          "value": "postgres"
         },
         {
           "key": "POSTGRES_DB",
-          "value": "${TIPI_NEXTCLOUD_DB_NAME}"
+          "value": "nextcloud"
         },
         {
           "key": "POSTGRES_USER",
-          "value": "${TIPI_NEXTCLOUD_DB_USER}"
+          "value": "postgres"
         },
         {
           "key": "POSTGRES_PASSWORD",
-          "value": "${TIPI_NEXTCLOUD_DB_PASSWORD}"
+          "value": "postgres"
         },
         {
           "key": "NEXTCLOUD_ADMIN_USER",
