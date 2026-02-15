@@ -3,14 +3,14 @@
   "name": "Nextcloud",
   "id": "nextcloud",
   "available": true,
-  "short_desc": "Self-hosted productivity and file collaboration platform",
+  "short_desc": "Self-hosted productivity and personal cloud platform",
   "author": "Nextcloud GmbH",
   "port": 8080,
   "categories": [
     "utilities",
     "data"
   ],
-  "description": "Nextcloud is a private cloud platform for file sync, calendars, contacts and collaborative applications.",
+  "description": "A self-hosted private cloud for files, calendars, contacts, chat, and collaboration. Includes Runtipi defaults for trusted domains and setup credentials.",
   "tipi_version": 1,
   "version": "29-apache",
   "source": "https://github.com/nextcloud/docker",
@@ -22,6 +22,6 @@
     "amd64"
   ],
   "created_at": 1771179876222,
-  "updated_at": 1771183081683,
+  "updated_at": 1771183204623,
   "min_tipi_version": "4.5.1"
 }
