@@ -39,26 +39,6 @@
           "value": "${TIPI_REACTIVE_RESUME_MAIL_FROM}"
         },
         {
-          "key": "SMTP_HOST",
-          "value": "${TIPI_REACTIVE_RESUME_SMTP_HOST}"
-        },
-        {
-          "key": "SMTP_PORT",
-          "value": "${TIPI_REACTIVE_RESUME_SMTP_PORT}"
-        },
-        {
-          "key": "SMTP_USER",
-          "value": "${TIPI_REACTIVE_RESUME_SMTP_USER}"
-        },
-        {
-          "key": "SMTP_PASS",
-          "value": "${TIPI_REACTIVE_RESUME_SMTP_PASS}"
-        },
-        {
-          "key": "SMTP_SECURE",
-          "value": "${TIPI_REACTIVE_RESUME_SMTP_SECURE}"
-        },
-        {
           "key": "S3_ENDPOINT",
           "value": "http://${TIPI_REACTIVE_RESUME_STORAGE_ENDPOINT}:${TIPI_REACTIVE_RESUME_STORAGE_PORT}"
         },
