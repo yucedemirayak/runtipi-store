@@ -17,39 +17,11 @@
   "website": "https://nextcloud.com/",
   "exposable": true,
   "dynamic_config": true,
-  "form_fields": [
-    {
-      "type": "text",
-      "label": "Admin Username",
-      "max": 50,
-      "min": 1,
-      "required": false,
-      "env_variable": "TIPI_NEXTCLOUD_ADMIN_USER",
-      "default": "admin"
-    },
-    {
-      "type": "password",
-      "label": "Admin Password",
-      "max": 64,
-      "min": 12,
-      "required": false,
-      "env_variable": "TIPI_NEXTCLOUD_ADMIN_PASSWORD",
-      "default": "change-me-now"
-    },
-    {
-      "type": "text",
-      "label": "Trusted Domains",
-      "required": false,
-      "env_variable": "TIPI_NEXTCLOUD_TRUSTED_DOMAINS",
-      "default": "",
-      "placeholder": "example.com nextcloud.example.com *.example.com"
-    }
-  ],
   "supported_architectures": [
     "arm64",
     "amd64"
   ],
   "created_at": 1771179876222,
-  "updated_at": 1771179876223,
+  "updated_at": 1771183081683,
   "min_tipi_version": "4.5.1"
 }

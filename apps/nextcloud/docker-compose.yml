@@ -14,8 +14,8 @@ services:
       - POSTGRES_DB=nextcloud
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-      - NEXTCLOUD_ADMIN_USER=${TIPI_NEXTCLOUD_ADMIN_USER}
-      - NEXTCLOUD_ADMIN_PASSWORD=${TIPI_NEXTCLOUD_ADMIN_PASSWORD}
+      - NEXTCLOUD_ADMIN_USER=${TIPI_NEXTCLOUD_ADMIN_USER:-admin}
+      - NEXTCLOUD_ADMIN_PASSWORD=${TIPI_NEXTCLOUD_ADMIN_PASSWORD:-change-me-now}
       - NEXTCLOUD_TRUSTED_DOMAINS=${TIPI_NEXTCLOUD_TRUSTED_DOMAINS}
     volumes:
       - ${APP_DATA_DIR}/data:/var/www/html
@@ -25,6 +25,7 @@ services:
       - |
         /entrypoint.sh apache2-foreground &
         NEXTCLOUD_PID=$!
+        TRUSTED_DOMAINS="${NEXTCLOUD_TRUSTED_DOMAINS:-${APP_DOMAIN} nextcloud.${LOCAL_DOMAIN}}"
 
         # Wait until Nextcloud config is created (first run) before applying trusted domains.
         for _ in $(seq 1 120); do
@@ -34,12 +35,12 @@ services:
           sleep 1
         done
 
-        if [ -n "${NEXTCLOUD_TRUSTED_DOMAINS+x}" ] && [ -f /var/www/html/config/config.php ]; then
+        if [ -n "${TRUSTED_DOMAINS}" ] && [ -f /var/www/html/config/config.php ]; then
           echo "Synchronizing trusted domains"
           su -s /bin/sh -c "php /var/www/html/occ config:system:delete trusted_domains" www-data || true
           set -f
           NC_TRUSTED_DOMAIN_IDX=1
-          for DOMAIN in ${NEXTCLOUD_TRUSTED_DOMAINS}; do
+          for DOMAIN in ${TRUSTED_DOMAINS}; do
             DOMAIN=$(echo "${DOMAIN}" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')
             su -s /bin/sh -c "php /var/www/html/occ config:system:set trusted_domains ${NC_TRUSTED_DOMAIN_IDX} --value=\"${DOMAIN}\"" www-data
             NC_TRUSTED_DOMAIN_IDX=$((NC_TRUSTED_DOMAIN_IDX+1))

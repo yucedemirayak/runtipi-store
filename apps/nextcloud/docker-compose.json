@@ -28,11 +28,11 @@
         },
         {
           "key": "NEXTCLOUD_ADMIN_USER",
-          "value": "${TIPI_NEXTCLOUD_ADMIN_USER}"
+          "value": "${TIPI_NEXTCLOUD_ADMIN_USER:-admin}"
         },
         {
           "key": "NEXTCLOUD_ADMIN_PASSWORD",
-          "value": "${TIPI_NEXTCLOUD_ADMIN_PASSWORD}"
+          "value": "${TIPI_NEXTCLOUD_ADMIN_PASSWORD:-change-me-now}"
         },
         {
           "key": "NEXTCLOUD_TRUSTED_DOMAINS",
@@ -48,7 +48,7 @@
       "entrypoint": [
         "/bin/sh",
         "-c",
-        "/entrypoint.sh apache2-foreground &\nNEXTCLOUD_PID=$!\n\n# Wait until Nextcloud config is created (first run) before applying trusted domains.\nfor _ in $(seq 1 120); do\n  if [ -f /var/www/html/config/config.php ]; then\n    break\n  fi\n  sleep 1\ndone\n\nif [ -n \"${NEXTCLOUD_TRUSTED_DOMAINS+x}\" ] && [ -f /var/www/html/config/config.php ]; then\necho \"Synchronizing trusted domains\"\nsu -s /bin/sh -c \"php /var/www/html/occ config:system:delete trusted_domains\" www-data || true\nset -f\nNC_TRUSTED_DOMAIN_IDX=1\nfor DOMAIN in ${NEXTCLOUD_TRUSTED_DOMAINS}; do\n  DOMAIN=$(echo \"${DOMAIN}\" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')\n  su -s /bin/sh -c \"php /var/www/html/occ config:system:set trusted_domains ${NC_TRUSTED_DOMAIN_IDX} --value=\\\"${DOMAIN}\\\"\" www-data\n  NC_TRUSTED_DOMAIN_IDX=$((NC_TRUSTED_DOMAIN_IDX+1))\ndone\nset +f\nfi\n\nwait \"$$NEXTCLOUD_PID\"\n"
+        "/entrypoint.sh apache2-foreground &\nNEXTCLOUD_PID=$!\nTRUSTED_DOMAINS=\"${NEXTCLOUD_TRUSTED_DOMAINS:-${APP_DOMAIN} nextcloud.${LOCAL_DOMAIN}}\"\n\n# Wait until Nextcloud config is created (first run) before applying trusted domains.\nfor _ in $(seq 1 120); do\n  if [ -f /var/www/html/config/config.php ]; then\n    break\n  fi\n  sleep 1\ndone\n\nif [ -n \"${TRUSTED_DOMAINS}\" ] && [ -f /var/www/html/config/config.php ]; then\necho \"Synchronizing trusted domains\"\nsu -s /bin/sh -c \"php /var/www/html/occ config:system:delete trusted_domains\" www-data || true\nset -f\nNC_TRUSTED_DOMAIN_IDX=1\nfor DOMAIN in ${TRUSTED_DOMAINS}; do\n  DOMAIN=$(echo \"${DOMAIN}\" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')\n  su -s /bin/sh -c \"php /var/www/html/occ config:system:set trusted_domains ${NC_TRUSTED_DOMAIN_IDX} --value=\\\"${DOMAIN}\\\"\" www-data\n  NC_TRUSTED_DOMAIN_IDX=$((NC_TRUSTED_DOMAIN_IDX+1))\ndone\nset +f\nfi\n\nwait \"$$NEXTCLOUD_PID\"\n"
       ]
     }
   ],
