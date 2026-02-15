@@ -19,6 +19,35 @@ services:
       - NEXTCLOUD_TRUSTED_DOMAINS=${TIPI_NEXTCLOUD_TRUSTED_DOMAINS}
     volumes:
       - ${APP_DATA_DIR}/data:/var/www/html
+    entrypoint:
+      - /bin/sh
+      - -c
+      - |
+        /entrypoint.sh apache2-foreground &
+        NEXTCLOUD_PID=$!
+
+        # Wait until Nextcloud config is created (first run) before applying trusted domains.
+        for _ in $(seq 1 120); do
+          if [ -f /var/www/html/config/config.php ]; then
+            break
+          fi
+          sleep 1
+        done
+
+        if [ -n "${NEXTCLOUD_TRUSTED_DOMAINS+x}" ] && [ -f /var/www/html/config/config.php ]; then
+          echo "Synchronizing trusted domains"
+          su -s /bin/sh -c "php /var/www/html/occ config:system:delete trusted_domains" www-data || true
+          set -f
+          NC_TRUSTED_DOMAIN_IDX=1
+          for DOMAIN in ${NEXTCLOUD_TRUSTED_DOMAINS}; do
+            DOMAIN=$(echo "${DOMAIN}" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')
+            su -s /bin/sh -c "php /var/www/html/occ config:system:set trusted_domains ${NC_TRUSTED_DOMAIN_IDX} --value=\"${DOMAIN}\"" www-data
+            NC_TRUSTED_DOMAIN_IDX=$((NC_TRUSTED_DOMAIN_IDX+1))
+          done
+          set +f
+        fi
+
+        wait "$NEXTCLOUD_PID"
     labels:
       # Main
       traefik.enable: true
