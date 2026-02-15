@@ -66,7 +66,44 @@
       "label": "Mail From",
       "required": false,
       "env_variable": "TIPI_REACTIVE_RESUME_MAIL_FROM",
-      "default": "noreply@localhost"
+      "default": "Reactive Resume <noreply@localhost>"
+    },
+    {
+      "type": "text",
+      "label": "SMTP Host",
+      "required": false,
+      "env_variable": "TIPI_REACTIVE_RESUME_SMTP_HOST",
+      "default": "localhost"
+    },
+    {
+      "type": "number",
+      "label": "SMTP Port",
+      "required": false,
+      "env_variable": "TIPI_REACTIVE_RESUME_SMTP_PORT",
+      "default": 1025,
+      "min": 1,
+      "max": 65535
+    },
+    {
+      "type": "text",
+      "label": "SMTP User",
+      "required": false,
+      "env_variable": "TIPI_REACTIVE_RESUME_SMTP_USER",
+      "default": ""
+    },
+    {
+      "type": "password",
+      "label": "SMTP Password",
+      "required": false,
+      "env_variable": "TIPI_REACTIVE_RESUME_SMTP_PASS",
+      "default": ""
+    },
+    {
+      "type": "boolean",
+      "label": "SMTP Secure (TLS)",
+      "required": false,
+      "env_variable": "TIPI_REACTIVE_RESUME_SMTP_SECURE",
+      "default": false
     },
     {
       "type": "text",
@@ -140,6 +177,6 @@
   ],
   "supported_architectures": ["arm64", "amd64"],
   "created_at": 1770666749000,
-  "updated_at": 1770666749000,
+  "updated_at": 1771157950133,
   "min_tipi_version": "4.5.0"
 }
