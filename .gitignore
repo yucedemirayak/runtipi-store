@@ -1,0 +1,24 @@
+# Python cache and bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Common Python tooling caches
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+.tox/
+
+# Environment files
+.env
+.env.*
+
+# OS and editor artifacts
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Runtipi scripts generated files
+apps/*/scripts/__pycache__/
