@@ -69,6 +69,12 @@ is_github_https_repo() {
   esac
 }
 
+log_auth_hint() {
+  if [ -z "${GIT_TOKEN}" ] && is_github_https_repo; then
+    log "Auth failed. If the repo is private, set Git Token with read access."
+  fi
+}
+
 auth_repo_url() {
   if [ -n "${GIT_TOKEN}" ] && is_github_https_repo; then
     printf '%s' "${REPO_URL}" | sed "s#^https://github.com/#https://x-access-token:${GIT_TOKEN}@github.com/#"
@@ -221,12 +227,26 @@ mkdir -p /home/site
 
 if [ ! -d "${PROJECT_DIR}/.git" ]; then
   log "Cloning repository..."
-  git clone --depth=1 -b "${REPO_BRANCH}" "$(auth_repo_url)" "${PROJECT_DIR}"
+  if ! git clone --depth=1 -b "${REPO_BRANCH}" "$(auth_repo_url)" "${PROJECT_DIR}"; then
+    log_auth_hint
+    exit 1
+  fi
   git -C "${PROJECT_DIR}" remote set-url origin "${REPO_URL}"
 else
+  # Ensure origin matches current settings before any fetch.
+  git -C "${PROJECT_DIR}" remote set-url origin "${REPO_URL}"
   log "Fetching latest changes..."
-  git_fetch_branch
-  git -C "${PROJECT_DIR}" checkout -B "${REPO_BRANCH}" "origin/${REPO_BRANCH}"
+  if ! git_fetch_branch; then
+    log "Fetch failed. Trying clean repository clone..."
+    log_auth_hint
+    rm -rf "${PROJECT_DIR}"
+    if ! git clone --depth=1 -b "${REPO_BRANCH}" "$(auth_repo_url)" "${PROJECT_DIR}"; then
+      log_auth_hint
+      exit 1
+    fi
+  else
+    git -C "${PROJECT_DIR}" checkout -B "${REPO_BRANCH}" "origin/${REPO_BRANCH}"
+  fi
   git -C "${PROJECT_DIR}" remote set-url origin "${REPO_URL}"
 fi
 
