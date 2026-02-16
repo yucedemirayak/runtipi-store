@@ -5,7 +5,7 @@ services:
     container_name: pterodactyl-wings
     image: ghcr.io/pterodactyl/wings:latest
     restart: unless-stopped
-    command: ["/bin/sh", "/scripts/bootstrap.sh"]
+    entrypoint: ["/bin/sh", "/scripts/bootstrap.sh"]
     ports:
       - ${APP_PORT}:8080
       - ${TIPI_PTERODACTYL_WINGS_SFTP_PORT}:2022
