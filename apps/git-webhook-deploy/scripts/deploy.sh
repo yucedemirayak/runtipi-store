@@ -184,19 +184,19 @@ start_app() {
   case "${FRAMEWORK}" in
     nextjs)
       log "Starting Next.js app on port ${SITE_PORT}..."
-      (pm_run start -p "${SITE_PORT}") >>"${APP_LOG_FILE}" 2>&1 &
+      (pm_run start -H 0.0.0.0 -p "${SITE_PORT}") >>"${APP_LOG_FILE}" 2>&1 &
       ;;
     react-vite)
       log "Serving Vite dist/ on port ${SITE_PORT}..."
-      (npx --yes serve -s dist -l "${SITE_PORT}") >>"${APP_LOG_FILE}" 2>&1 &
+      (npx --yes serve -s dist -l "tcp://0.0.0.0:${SITE_PORT}") >>"${APP_LOG_FILE}" 2>&1 &
       ;;
     react-cra)
       log "Serving CRA build/ on port ${SITE_PORT}..."
-      (npx --yes serve -s build -l "${SITE_PORT}") >>"${APP_LOG_FILE}" 2>&1 &
+      (npx --yes serve -s build -l "tcp://0.0.0.0:${SITE_PORT}") >>"${APP_LOG_FILE}" 2>&1 &
       ;;
     static-html)
       log "Serving repository root as static files on port ${SITE_PORT}..."
-      (npx --yes serve -s . -l "${SITE_PORT}") >>"${APP_LOG_FILE}" 2>&1 &
+      (npx --yes serve -s . -l "tcp://0.0.0.0:${SITE_PORT}") >>"${APP_LOG_FILE}" 2>&1 &
       ;;
     custom)
       log "FRAMEWORK=custom requires START_CMD."
@@ -206,6 +206,13 @@ start_app() {
 
   new_pid="$!"
   echo "${new_pid}" > "${PID_FILE}"
+
+  sleep 2
+  if ! kill -0 "${new_pid}" 2>/dev/null; then
+    log "App process exited immediately after startup. Check app log output below."
+    tail -n 80 "${APP_LOG_FILE}" 2>/dev/null || true
+    exit 1
+  fi
 }
 
 log "Deploy started (branch=${REPO_BRANCH}, framework=${FRAMEWORK}, pm=${PACKAGE_MANAGER})"

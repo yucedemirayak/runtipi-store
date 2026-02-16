@@ -12,7 +12,7 @@
   ],
   "description": "Generic GitHub webhook deployer for Next.js, React, static HTML, and custom web apps.",
   "tipi_version": 1,
-  "version": "node-20-alpine",
+  "version": "node-20-alpine-r2",
   "source": "https://github.com/yucedemirayak/runtipi-store",
   "website": "https://github.com/yucedemirayak/runtipi-store",
   "exposable": true,
@@ -155,6 +155,6 @@
     "arm64"
   ],
   "created_at": 1735689600000,
-  "updated_at": 1735689600000,
+  "updated_at": 1767225600000,
   "min_tipi_version": "4.5.0"
 }
