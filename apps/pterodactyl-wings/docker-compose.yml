@@ -9,7 +9,7 @@ services:
     command:
       - /bin/sh
       - -c
-      - mkdir -p /var/lib/pterodactyl/volumes /var/lib/pterodactyl/archives /var/lib/pterodactyl/backups && chown 988:988 /var/lib/pterodactyl /var/lib/pterodactyl/volumes /var/lib/pterodactyl/archives /var/lib/pterodactyl/backups && chmod 755 /var/lib/pterodactyl /var/lib/pterodactyl/volumes /var/lib/pterodactyl/archives /var/lib/pterodactyl/backups
+      - mkdir -p /var/lib/pterodactyl/volumes /var/lib/pterodactyl/archives /var/lib/pterodactyl/backups && chown 988:988 /var/lib/pterodactyl /var/lib/pterodactyl/volumes /var/lib/pterodactyl/archives /var/lib/pterodactyl/backups && chmod 755 /var/lib/pterodactyl /var/lib/pterodactyl/volumes /var/lib/pterodactyl/archives /var/lib/pterodactyl/backups && tail -f /dev/null
     volumes:
       - /var/lib/pterodactyl:/var/lib/pterodactyl
 
@@ -19,7 +19,7 @@ services:
     restart: unless-stopped
     depends_on:
       pterodactyl-wings-perms:
-        condition: service_completed_successfully
+        condition: service_started
     ports:
       - ${APP_PORT}:8080
       - ${TIPI_PTERODACTYL_WINGS_SFTP_PORT}:2022

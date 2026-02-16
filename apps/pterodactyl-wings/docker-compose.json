@@ -7,7 +7,7 @@
       "command": [
         "/bin/sh",
         "-c",
-        "mkdir -p /var/lib/pterodactyl/volumes /var/lib/pterodactyl/archives /var/lib/pterodactyl/backups && chown 988:988 /var/lib/pterodactyl /var/lib/pterodactyl/volumes /var/lib/pterodactyl/archives /var/lib/pterodactyl/backups && chmod 755 /var/lib/pterodactyl /var/lib/pterodactyl/volumes /var/lib/pterodactyl/archives /var/lib/pterodactyl/backups"
+        "mkdir -p /var/lib/pterodactyl/volumes /var/lib/pterodactyl/archives /var/lib/pterodactyl/backups && chown 988:988 /var/lib/pterodactyl /var/lib/pterodactyl/volumes /var/lib/pterodactyl/archives /var/lib/pterodactyl/backups && chmod 755 /var/lib/pterodactyl /var/lib/pterodactyl/volumes /var/lib/pterodactyl/archives /var/lib/pterodactyl/backups && tail -f /dev/null"
       ],
       "volumes": [
         { "hostPath": "/var/lib/pterodactyl", "containerPath": "/var/lib/pterodactyl" }
@@ -19,7 +19,7 @@
       "isMain": true,
       "internalPort": 8080,
       "dependsOn": {
-        "pterodactyl-wings-perms": { "condition": "service_completed_successfully" }
+        "pterodactyl-wings-perms": { "condition": "service_started" }
       },
       "addPorts": [
         {
