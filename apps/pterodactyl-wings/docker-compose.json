@@ -5,7 +5,6 @@
       "image": "ghcr.io/pterodactyl/wings:latest",
       "isMain": true,
       "internalPort": 8080,
-      "entrypoint": ["/bin/sh", "/scripts/bootstrap.sh"],
       "addPorts": [
         {
           "hostPort": "${TIPI_PTERODACTYL_WINGS_SFTP_PORT}",
@@ -23,8 +22,7 @@
         { "hostPath": "${APP_DATA_DIR}/data", "containerPath": "/var/lib/pterodactyl" },
         { "hostPath": "${APP_DATA_DIR}/logs", "containerPath": "/var/log/pterodactyl" },
         { "hostPath": "${APP_DATA_DIR}/tmp", "containerPath": "/tmp/pterodactyl" },
-        { "hostPath": "${APP_DATA_DIR}/run", "containerPath": "/run/wings" },
-        { "hostPath": "${ROOT_FOLDER_HOST}/apps/${APP_STORE_ID}/${APP_NAME}/scripts", "containerPath": "/scripts", "readOnly": true }
+        { "hostPath": "${APP_DATA_DIR}/run", "containerPath": "/run/wings" }
       ]
     }
   ],
