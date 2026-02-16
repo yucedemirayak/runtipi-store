@@ -5,6 +5,7 @@
       "image": "ghcr.io/pterodactyl/panel:latest",
       "isMain": true,
       "internalPort": 80,
+      "entrypoint": ["/bin/sh", "/scripts/bootstrap.sh"],
       "environment": [
         { "key": "TZ", "value": "${TZ}" },
         { "key": "APP_URL", "value": "${TIPI_PTERODACTYL_PANEL_APP_URL}" },
@@ -32,7 +33,8 @@
         { "hostPath": "${APP_DATA_DIR}/var", "containerPath": "/app/var" },
         { "hostPath": "${APP_DATA_DIR}/logs", "containerPath": "/app/storage/logs" },
         { "hostPath": "${APP_DATA_DIR}/nginx", "containerPath": "/etc/nginx/http.d" },
-        { "hostPath": "${APP_DATA_DIR}/certs", "containerPath": "/etc/letsencrypt" }
+        { "hostPath": "${APP_DATA_DIR}/certs", "containerPath": "/etc/letsencrypt" },
+        { "hostPath": "${ROOT_FOLDER_HOST}/apps/${APP_STORE_ID}/${APP_NAME}/scripts", "containerPath": "/scripts", "readOnly": true }
       ]
     }
   ],
