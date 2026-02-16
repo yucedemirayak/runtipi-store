@@ -11,7 +11,7 @@
     "utilities"
   ],
   "description": "Playit Agent creates outbound tunnels so your local services can be reached without router port forwarding.",
-  "tipi_version": 1,
+  "tipi_version": 2,
   "version": "latest",
   "source": "https://github.com/playit-cloud/playit-agent",
   "website": "https://playit.gg/",
@@ -32,6 +32,6 @@
     "amd64"
   ],
   "created_at": 1771179271821,
-  "updated_at": 1771179271821,
+  "updated_at": 1771245418612,
   "min_tipi_version": "4.5.0"
 }
