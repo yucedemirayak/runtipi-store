@@ -27,24 +27,10 @@
     },
     {
       "type": "text",
-      "label": "Storage URL",
-      "required": false,
-      "env_variable": "TIPI_REACTIVE_RESUME_STORAGE_URL",
-      "default": "http://192.168.1.125:8000/default"
-    },
-    {
-      "type": "text",
       "label": "Database URL",
       "required": false,
       "env_variable": "TIPI_REACTIVE_RESUME_DATABASE_URL",
       "default": "postgresql://postgres:postgres@postgres:5432/app"
-    },
-    {
-      "type": "text",
-      "label": "Redis URL",
-      "required": false,
-      "env_variable": "TIPI_REACTIVE_RESUME_REDIS_URL",
-      "default": "redis://default:redispass@redis:6379"
     },
     {
       "type": "password",
@@ -54,15 +40,6 @@
       "max": 128,
       "env_variable": "TIPI_REACTIVE_RESUME_ACCESS_TOKEN_SECRET",
       "default": "access_token_secret"
-    },
-    {
-      "type": "password",
-      "label": "Refresh Token Secret",
-      "required": false,
-      "min": 8,
-      "max": 128,
-      "env_variable": "TIPI_REACTIVE_RESUME_REFRESH_TOKEN_SECRET",
-      "default": "refresh_token_secret"
     },
     {
       "type": "text",
@@ -116,13 +93,6 @@
       "max": 128,
       "env_variable": "TIPI_REACTIVE_RESUME_STORAGE_SECRET_KEY",
       "default": "minioadmin"
-    },
-    {
-      "type": "boolean",
-      "label": "Storage Use SSL",
-      "required": false,
-      "env_variable": "TIPI_REACTIVE_RESUME_STORAGE_USE_SSL",
-      "default": false
     },
     {
       "type": "text",

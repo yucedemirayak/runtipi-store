@@ -16,11 +16,12 @@ Kisisel Runtipi app-store reposu.
 ## App'ler
 
 - `cloudbeaver`
-- `postgres`
-- `mariadb`
-- `redis`
 - `headless-chrome`
+- `mariadb`
+- `playit-agent`
+- `postgres`
 - `reactive-resume`
+- `redis`
 - `wordpress`
 - `yuce-site`
 
@@ -29,10 +30,8 @@ Kisisel Runtipi app-store reposu.
 1. Bu repoyu GitHub'a push et.
 2. Runtipi panelinde App Store/Repositories kismina repo URL'ini ekle.
 3. Sync/Refresh yap.
-4. `cloudbeaver` uygulamasi listede gorunecek.
+4. Yukaridaki uygulamalar listede gorunur.
 
 ## Not
 
-CloudBeaver verisi asagidaki path'te kalicidir:
-- Host: `${APP_DATA_DIR}/data`
-- Container: `/opt/cloudbeaver/workspace`
+Her app kendi `apps/<app-id>/` klasorunden okunur.
