@@ -7,10 +7,12 @@
       "command": [
         "/bin/sh",
         "-c",
-        "mkdir -p /var/lib/pterodactyl/volumes /var/lib/pterodactyl/archives /var/lib/pterodactyl/backups && chown 988:988 /var/lib/pterodactyl /var/lib/pterodactyl/volumes /var/lib/pterodactyl/archives /var/lib/pterodactyl/backups && chmod 755 /var/lib/pterodactyl /var/lib/pterodactyl/volumes /var/lib/pterodactyl/archives /var/lib/pterodactyl/backups && tail -f /dev/null"
+        "mkdir -p /var/lib/pterodactyl/volumes /var/lib/pterodactyl/archives /var/lib/pterodactyl/backups /tmp/pterodactyl /run/wings /run/wings/machine-id /run/wings/etc && chown 988:988 /var/lib/pterodactyl /var/lib/pterodactyl/volumes /var/lib/pterodactyl/archives /var/lib/pterodactyl/backups /tmp/pterodactyl /run/wings /run/wings/machine-id /run/wings/etc && chmod 755 /var/lib/pterodactyl /var/lib/pterodactyl/volumes /var/lib/pterodactyl/archives /var/lib/pterodactyl/backups /tmp/pterodactyl /run/wings /run/wings/machine-id /run/wings/etc && tail -f /dev/null"
       ],
       "volumes": [
-        { "hostPath": "/var/lib/pterodactyl", "containerPath": "/var/lib/pterodactyl" }
+        { "hostPath": "/var/lib/pterodactyl", "containerPath": "/var/lib/pterodactyl" },
+        { "hostPath": "/tmp/pterodactyl", "containerPath": "/tmp/pterodactyl" },
+        { "hostPath": "/run/wings", "containerPath": "/run/wings" }
       ]
     },
     {
@@ -37,8 +39,8 @@
         { "hostPath": "${APP_DATA_DIR}/etc", "containerPath": "/etc/pterodactyl" },
         { "hostPath": "/var/lib/pterodactyl", "containerPath": "/var/lib/pterodactyl" },
         { "hostPath": "${APP_DATA_DIR}/logs", "containerPath": "/var/log/pterodactyl" },
-        { "hostPath": "${APP_DATA_DIR}/tmp", "containerPath": "/tmp/pterodactyl" },
-        { "hostPath": "${APP_DATA_DIR}/run", "containerPath": "/run/wings" }
+        { "hostPath": "/tmp/pterodactyl", "containerPath": "/tmp/pterodactyl" },
+        { "hostPath": "/run/wings", "containerPath": "/run/wings" }
       ]
     }
   ],

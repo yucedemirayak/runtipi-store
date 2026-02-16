@@ -9,9 +9,11 @@ services:
     command:
       - /bin/sh
       - -c
-      - mkdir -p /var/lib/pterodactyl/volumes /var/lib/pterodactyl/archives /var/lib/pterodactyl/backups && chown 988:988 /var/lib/pterodactyl /var/lib/pterodactyl/volumes /var/lib/pterodactyl/archives /var/lib/pterodactyl/backups && chmod 755 /var/lib/pterodactyl /var/lib/pterodactyl/volumes /var/lib/pterodactyl/archives /var/lib/pterodactyl/backups && tail -f /dev/null
+      - mkdir -p /var/lib/pterodactyl/volumes /var/lib/pterodactyl/archives /var/lib/pterodactyl/backups /tmp/pterodactyl /run/wings /run/wings/machine-id /run/wings/etc && chown 988:988 /var/lib/pterodactyl /var/lib/pterodactyl/volumes /var/lib/pterodactyl/archives /var/lib/pterodactyl/backups /tmp/pterodactyl /run/wings /run/wings/machine-id /run/wings/etc && chmod 755 /var/lib/pterodactyl /var/lib/pterodactyl/volumes /var/lib/pterodactyl/archives /var/lib/pterodactyl/backups /tmp/pterodactyl /run/wings /run/wings/machine-id /run/wings/etc && tail -f /dev/null
     volumes:
       - /var/lib/pterodactyl:/var/lib/pterodactyl
+      - /tmp/pterodactyl:/tmp/pterodactyl
+      - /run/wings:/run/wings
 
   pterodactyl-wings:
     container_name: pterodactyl-wings
@@ -33,8 +35,8 @@ services:
       - ${APP_DATA_DIR}/etc:/etc/pterodactyl
       - /var/lib/pterodactyl:/var/lib/pterodactyl
       - ${APP_DATA_DIR}/logs:/var/log/pterodactyl
-      - ${APP_DATA_DIR}/tmp:/tmp/pterodactyl
-      - ${APP_DATA_DIR}/run:/run/wings
+      - /tmp/pterodactyl:/tmp/pterodactyl
+      - /run/wings:/run/wings
     labels:
       traefik.enable: true
       traefik.http.middlewares.pterodactyl-wings-web-redirect.redirectscheme.scheme: https
