@@ -25,7 +25,7 @@ If `Webhook Secret` is left empty:
 
 ## Ports
 
-- App: `${APP_PORT}` -> container `${TIPI_GIT_WEBHOOK_DEPLOY_SITE_PORT}`
+- App: `${APP_PORT}` -> container `3000`
 - Webhook: configurable host port -> container `5000`
 
 ## Notes

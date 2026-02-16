@@ -121,15 +121,6 @@
     },
     {
       "type": "number",
-      "label": "Site Port",
-      "required": true,
-      "min": 1,
-      "max": 65535,
-      "env_variable": "TIPI_GIT_WEBHOOK_DEPLOY_SITE_PORT",
-      "default": 3000
-    },
-    {
-      "type": "number",
       "label": "Webhook Port",
       "required": true,
       "min": 1,

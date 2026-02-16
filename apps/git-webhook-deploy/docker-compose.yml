@@ -7,7 +7,7 @@ services:
     command: ["/bin/sh", "/scripts/bootstrap.sh"]
     restart: unless-stopped
     ports:
-      - ${APP_PORT}:${TIPI_GIT_WEBHOOK_DEPLOY_SITE_PORT}
+      - ${APP_PORT}:3000
       - ${TIPI_GIT_WEBHOOK_DEPLOY_WEBHOOK_PORT}:5000
     networks:
       - tipi_main_network
@@ -25,7 +25,6 @@ services:
       - START_CMD=${TIPI_GIT_WEBHOOK_DEPLOY_START_CMD}
       - WEBHOOK_PATH=${TIPI_GIT_WEBHOOK_DEPLOY_WEBHOOK_PATH}
       - DEPLOY_ON_STARTUP=${TIPI_GIT_WEBHOOK_DEPLOY_DEPLOY_ON_STARTUP}
-      - SITE_PORT=${TIPI_GIT_WEBHOOK_DEPLOY_SITE_PORT}
       - WEBHOOK_PORT=5000
     volumes:
       - ${APP_DATA_DIR}/site:/home/site
@@ -33,7 +32,7 @@ services:
     labels:
       traefik.enable: true
       traefik.http.middlewares.git-webhook-deploy-web-redirect.redirectscheme.scheme: https
-      traefik.http.services.git-webhook-deploy.loadbalancer.server.port: ${TIPI_GIT_WEBHOOK_DEPLOY_SITE_PORT}
+      traefik.http.services.git-webhook-deploy.loadbalancer.server.port: 3000
       traefik.http.routers.git-webhook-deploy-insecure.rule: Host(`${APP_DOMAIN}`)
       traefik.http.routers.git-webhook-deploy-insecure.entrypoints: web
       traefik.http.routers.git-webhook-deploy-insecure.service: git-webhook-deploy
