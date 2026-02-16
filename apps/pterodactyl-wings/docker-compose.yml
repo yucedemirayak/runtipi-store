@@ -1,10 +1,25 @@
 version: '3.8'
 
 services:
+  pterodactyl-wings-perms:
+    container_name: pterodactyl-wings-perms
+    image: alpine:3.21
+    restart: "no"
+    network_mode: none
+    command:
+      - /bin/sh
+      - -c
+      - mkdir -p /var/lib/pterodactyl/volumes /var/lib/pterodactyl/archives /var/lib/pterodactyl/backups && chown 988:988 /var/lib/pterodactyl /var/lib/pterodactyl/volumes /var/lib/pterodactyl/archives /var/lib/pterodactyl/backups && chmod 755 /var/lib/pterodactyl /var/lib/pterodactyl/volumes /var/lib/pterodactyl/archives /var/lib/pterodactyl/backups
+    volumes:
+      - /var/lib/pterodactyl:/var/lib/pterodactyl
+
   pterodactyl-wings:
     container_name: pterodactyl-wings
     image: ghcr.io/pterodactyl/wings:latest
     restart: unless-stopped
+    depends_on:
+      pterodactyl-wings-perms:
+        condition: service_completed_successfully
     ports:
       - ${APP_PORT}:8080
       - ${TIPI_PTERODACTYL_WINGS_SFTP_PORT}:2022

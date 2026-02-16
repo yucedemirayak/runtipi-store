@@ -1,10 +1,26 @@
 {
   "services": [
     {
+      "name": "pterodactyl-wings-perms",
+      "image": "alpine:3.21",
+      "networkMode": "none",
+      "command": [
+        "/bin/sh",
+        "-c",
+        "mkdir -p /var/lib/pterodactyl/volumes /var/lib/pterodactyl/archives /var/lib/pterodactyl/backups && chown 988:988 /var/lib/pterodactyl /var/lib/pterodactyl/volumes /var/lib/pterodactyl/archives /var/lib/pterodactyl/backups && chmod 755 /var/lib/pterodactyl /var/lib/pterodactyl/volumes /var/lib/pterodactyl/archives /var/lib/pterodactyl/backups"
+      ],
+      "volumes": [
+        { "hostPath": "/var/lib/pterodactyl", "containerPath": "/var/lib/pterodactyl" }
+      ]
+    },
+    {
       "name": "pterodactyl-wings",
       "image": "ghcr.io/pterodactyl/wings:latest",
       "isMain": true,
       "internalPort": 8080,
+      "dependsOn": {
+        "pterodactyl-wings-perms": { "condition": "service_completed_successfully" }
+      },
       "addPorts": [
         {
           "hostPort": "${TIPI_PTERODACTYL_WINGS_SFTP_PORT}",
