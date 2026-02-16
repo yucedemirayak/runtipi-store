@@ -6,6 +6,7 @@
       "isMain": true,
       "internalPort": 80,
       "entrypoint": ["/bin/sh", "/scripts/bootstrap.sh"],
+      "command": ["supervisord", "-n", "-c", "/etc/supervisord.conf"],
       "environment": [
         { "key": "TZ", "value": "${TZ}" },
         { "key": "APP_URL", "value": "${TIPI_PTERODACTYL_PANEL_APP_URL}" },

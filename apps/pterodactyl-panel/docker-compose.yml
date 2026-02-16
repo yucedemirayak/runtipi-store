@@ -5,6 +5,7 @@ services:
     container_name: pterodactyl-panel
     image: ghcr.io/pterodactyl/panel:latest
     entrypoint: ["/bin/sh", "/scripts/bootstrap.sh"]
+    command: ["supervisord", "-n", "-c", "/etc/supervisord.conf"]
     restart: unless-stopped
     ports:
       - ${APP_PORT}:80
