@@ -19,7 +19,7 @@
         { "hostPath": "/var/run/docker.sock", "containerPath": "/var/run/docker.sock" },
         { "hostPath": "/var/lib/docker/containers", "containerPath": "/var/lib/docker/containers", "readOnly": true },
         { "hostPath": "${APP_DATA_DIR}/etc", "containerPath": "/etc/pterodactyl" },
-        { "hostPath": "${APP_DATA_DIR}/data", "containerPath": "/var/lib/pterodactyl" },
+        { "hostPath": "/var/lib/pterodactyl", "containerPath": "/var/lib/pterodactyl" },
         { "hostPath": "${APP_DATA_DIR}/logs", "containerPath": "/var/log/pterodactyl" },
         { "hostPath": "${APP_DATA_DIR}/tmp", "containerPath": "/tmp/pterodactyl" },
         { "hostPath": "${APP_DATA_DIR}/run", "containerPath": "/run/wings" }

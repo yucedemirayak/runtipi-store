@@ -16,7 +16,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - /var/lib/docker/containers:/var/lib/docker/containers:ro
       - ${APP_DATA_DIR}/etc:/etc/pterodactyl
-      - ${APP_DATA_DIR}/data:/var/lib/pterodactyl
+      - /var/lib/pterodactyl:/var/lib/pterodactyl
       - ${APP_DATA_DIR}/logs:/var/log/pterodactyl
       - ${APP_DATA_DIR}/tmp:/tmp/pterodactyl
       - ${APP_DATA_DIR}/run:/run/wings

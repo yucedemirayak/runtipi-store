@@ -17,3 +17,4 @@ Wings is the node daemon used by Pterodactyl Panel to run game server containers
 ## Required host mounts
 
 - Docker socket and Docker containers are mounted so Wings can manage game server containers.
+- Game server data is stored on host at `/var/lib/pterodactyl` (standard Wings path).
