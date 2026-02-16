@@ -16,6 +16,7 @@ Kisisel Runtipi app-store reposu.
 ## App'ler
 
 - `cloudbeaver`
+- `git-webhook-deploy`
 - `headless-chrome`
 - `mariadb`
 - `playit-agent`

@@ -1,0 +1,169 @@
+{
+  "$schema": "../app-info-schema.json",
+  "name": "Git Webhook Deploy",
+  "id": "git-webhook-deploy",
+  "available": true,
+  "short_desc": "Build and publish web apps from signed GitHub webhooks",
+  "author": "yucedemirayak",
+  "port": 4300,
+  "categories": [
+    "development",
+    "utilities"
+  ],
+  "description": "Generic GitHub webhook deployer for Next.js, React, static HTML, and custom web apps.",
+  "tipi_version": 1,
+  "version": "node-20-alpine",
+  "source": "https://github.com/yucedemirayak/runtipi-store",
+  "website": "https://github.com/yucedemirayak/runtipi-store",
+  "exposable": true,
+  "dynamic_config": true,
+  "form_fields": [
+    {
+      "type": "password",
+      "label": "Git Token (optional)",
+      "required": false,
+      "env_variable": "TIPI_GIT_WEBHOOK_DEPLOY_GIT_TOKEN",
+      "default": ""
+    },
+    {
+      "type": "password",
+      "label": "Webhook Secret",
+      "required": false,
+      "min": 8,
+      "max": 255,
+      "env_variable": "TIPI_GIT_WEBHOOK_DEPLOY_WEBHOOK_SECRET",
+      "default": ""
+    },
+    {
+      "type": "text",
+      "label": "Repository URL",
+      "required": true,
+      "env_variable": "TIPI_GIT_WEBHOOK_DEPLOY_REPO_URL",
+      "default": "https://github.com/your-org/your-repo.git"
+    },
+    {
+      "type": "text",
+      "label": "Repository Branch",
+      "required": false,
+      "env_variable": "TIPI_GIT_WEBHOOK_DEPLOY_REPO_BRANCH",
+      "default": "main"
+    },
+    {
+      "type": "text",
+      "label": "Framework",
+      "required": true,
+      "env_variable": "TIPI_GIT_WEBHOOK_DEPLOY_FRAMEWORK",
+      "default": "nextjs",
+      "options": [
+        {
+          "label": "Next.js",
+          "value": "nextjs"
+        },
+        {
+          "label": "React (Vite)",
+          "value": "react-vite"
+        },
+        {
+          "label": "React (CRA)",
+          "value": "react-cra"
+        },
+        {
+          "label": "Static HTML",
+          "value": "static-html"
+        },
+        {
+          "label": "Custom",
+          "value": "custom"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "label": "Package Manager",
+      "required": true,
+      "env_variable": "TIPI_GIT_WEBHOOK_DEPLOY_PACKAGE_MANAGER",
+      "default": "npm",
+      "options": [
+        {
+          "label": "npm",
+          "value": "npm"
+        },
+        {
+          "label": "pnpm",
+          "value": "pnpm"
+        },
+        {
+          "label": "yarn",
+          "value": "yarn"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "label": "Install Command Override",
+      "required": false,
+      "env_variable": "TIPI_GIT_WEBHOOK_DEPLOY_INSTALL_CMD",
+      "default": ""
+    },
+    {
+      "type": "text",
+      "label": "Build Command Override",
+      "required": false,
+      "env_variable": "TIPI_GIT_WEBHOOK_DEPLOY_BUILD_CMD",
+      "default": ""
+    },
+    {
+      "type": "text",
+      "label": "Start Command Override",
+      "required": false,
+      "env_variable": "TIPI_GIT_WEBHOOK_DEPLOY_START_CMD",
+      "default": ""
+    },
+    {
+      "type": "number",
+      "label": "Site Port",
+      "required": true,
+      "min": 1,
+      "max": 65535,
+      "env_variable": "TIPI_GIT_WEBHOOK_DEPLOY_SITE_PORT",
+      "default": 3000
+    },
+    {
+      "type": "number",
+      "label": "Webhook Port",
+      "required": true,
+      "min": 1,
+      "max": 65535,
+      "env_variable": "TIPI_GIT_WEBHOOK_DEPLOY_WEBHOOK_PORT",
+      "default": 5001
+    },
+    {
+      "type": "text",
+      "label": "Webhook Path",
+      "required": false,
+      "env_variable": "TIPI_GIT_WEBHOOK_DEPLOY_WEBHOOK_PATH",
+      "default": "/webhook"
+    },
+    {
+      "type": "boolean",
+      "label": "Deploy On Startup",
+      "required": false,
+      "env_variable": "TIPI_GIT_WEBHOOK_DEPLOY_DEPLOY_ON_STARTUP",
+      "default": true
+    },
+    {
+      "type": "text",
+      "label": "Node Environment",
+      "required": false,
+      "env_variable": "TIPI_GIT_WEBHOOK_DEPLOY_NODE_ENV",
+      "default": "production"
+    }
+  ],
+  "supported_architectures": [
+    "amd64",
+    "arm64"
+  ],
+  "created_at": 1735689600000,
+  "updated_at": 1735689600000,
+  "min_tipi_version": "4.5.0"
+}

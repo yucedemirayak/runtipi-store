@@ -1,0 +1,93 @@
+{
+  "services": [
+    {
+      "name": "git-webhook-deploy",
+      "image": "node:20-alpine",
+      "isMain": true,
+      "internalPort": "${TIPI_GIT_WEBHOOK_DEPLOY_SITE_PORT}",
+      "command": ["/bin/sh", "/scripts/bootstrap.sh"],
+      "addPorts": [
+        {
+          "hostPort": "${TIPI_GIT_WEBHOOK_DEPLOY_WEBHOOK_PORT}",
+          "containerPort": 5000,
+          "tcp": true
+        }
+      ],
+      "environment": [
+        {
+          "key": "TZ",
+          "value": "${TZ}"
+        },
+        {
+          "key": "NODE_ENV",
+          "value": "${TIPI_GIT_WEBHOOK_DEPLOY_NODE_ENV}"
+        },
+        {
+          "key": "GIT_TOKEN",
+          "value": "${TIPI_GIT_WEBHOOK_DEPLOY_GIT_TOKEN}"
+        },
+        {
+          "key": "WEBHOOK_SECRET",
+          "value": "${TIPI_GIT_WEBHOOK_DEPLOY_WEBHOOK_SECRET}"
+        },
+        {
+          "key": "REPO_URL",
+          "value": "${TIPI_GIT_WEBHOOK_DEPLOY_REPO_URL}"
+        },
+        {
+          "key": "REPO_BRANCH",
+          "value": "${TIPI_GIT_WEBHOOK_DEPLOY_REPO_BRANCH}"
+        },
+        {
+          "key": "FRAMEWORK",
+          "value": "${TIPI_GIT_WEBHOOK_DEPLOY_FRAMEWORK}"
+        },
+        {
+          "key": "PACKAGE_MANAGER",
+          "value": "${TIPI_GIT_WEBHOOK_DEPLOY_PACKAGE_MANAGER}"
+        },
+        {
+          "key": "INSTALL_CMD",
+          "value": "${TIPI_GIT_WEBHOOK_DEPLOY_INSTALL_CMD}"
+        },
+        {
+          "key": "BUILD_CMD",
+          "value": "${TIPI_GIT_WEBHOOK_DEPLOY_BUILD_CMD}"
+        },
+        {
+          "key": "START_CMD",
+          "value": "${TIPI_GIT_WEBHOOK_DEPLOY_START_CMD}"
+        },
+        {
+          "key": "WEBHOOK_PATH",
+          "value": "${TIPI_GIT_WEBHOOK_DEPLOY_WEBHOOK_PATH}"
+        },
+        {
+          "key": "DEPLOY_ON_STARTUP",
+          "value": "${TIPI_GIT_WEBHOOK_DEPLOY_DEPLOY_ON_STARTUP}"
+        },
+        {
+          "key": "SITE_PORT",
+          "value": "${TIPI_GIT_WEBHOOK_DEPLOY_SITE_PORT}"
+        },
+        {
+          "key": "WEBHOOK_PORT",
+          "value": "5000"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/site",
+          "containerPath": "/home/site"
+        },
+        {
+          "hostPath": "${ROOT_FOLDER_HOST}/apps/${APP_STORE_ID}/${APP_NAME}/scripts",
+          "containerPath": "/scripts",
+          "readOnly": true
+        }
+      ]
+    }
+  ],
+  "schemaVersion": 2,
+  "$schema": "https://schemas.runtipi.io/v2/dynamic-compose.json"
+}
