@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  pterodactyl-wings:
+    container_name: pterodactyl-wings
+    image: ghcr.io/pterodactyl/wings:latest
+    restart: unless-stopped
+    command: ["/bin/sh", "/scripts/bootstrap.sh"]
+    ports:
+      - ${APP_PORT}:8080
+      - ${TIPI_PTERODACTYL_WINGS_SFTP_PORT}:2022
+    networks:
+      - tipi_main_network
+    environment:
+      - TZ=${TZ}
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+      - ${APP_DATA_DIR}/etc:/etc/pterodactyl
+      - ${APP_DATA_DIR}/data:/var/lib/pterodactyl
+      - ${APP_DATA_DIR}/logs:/var/log/pterodactyl
+      - ${APP_DATA_DIR}/tmp:/tmp/pterodactyl
+      - ${APP_DATA_DIR}/run:/run/wings
+      - ${ROOT_FOLDER_HOST}/apps/${APP_STORE_ID}/${APP_NAME}/scripts:/scripts:ro
+    labels:
+      traefik.enable: true
+      traefik.http.middlewares.pterodactyl-wings-web-redirect.redirectscheme.scheme: https
+      traefik.http.services.pterodactyl-wings.loadbalancer.server.port: 8080
+      traefik.http.routers.pterodactyl-wings-insecure.rule: Host(`${APP_DOMAIN}`)
+      traefik.http.routers.pterodactyl-wings-insecure.entrypoints: web
+      traefik.http.routers.pterodactyl-wings-insecure.service: pterodactyl-wings
+      traefik.http.routers.pterodactyl-wings-insecure.middlewares: pterodactyl-wings-web-redirect
+      traefik.http.routers.pterodactyl-wings.rule: Host(`${APP_DOMAIN}`)
+      traefik.http.routers.pterodactyl-wings.entrypoints: websecure
+      traefik.http.routers.pterodactyl-wings.service: pterodactyl-wings
+      traefik.http.routers.pterodactyl-wings.tls.certresolver: myresolver
+      traefik.http.routers.pterodactyl-wings-local-insecure.rule: Host(`pterodactyl-wings.${LOCAL_DOMAIN}`)
+      traefik.http.routers.pterodactyl-wings-local-insecure.entrypoints: web
+      traefik.http.routers.pterodactyl-wings-local-insecure.service: pterodactyl-wings
+      traefik.http.routers.pterodactyl-wings-local-insecure.middlewares: pterodactyl-wings-web-redirect
+      traefik.http.routers.pterodactyl-wings-local.rule: Host(`pterodactyl-wings.${LOCAL_DOMAIN}`)
+      traefik.http.routers.pterodactyl-wings-local.entrypoints: websecure
+      traefik.http.routers.pterodactyl-wings-local.service: pterodactyl-wings
+      traefik.http.routers.pterodactyl-wings-local.tls: true
+      runtipi.managed: true

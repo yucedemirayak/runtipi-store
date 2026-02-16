@@ -20,6 +20,8 @@ Kisisel Runtipi app-store reposu.
 - `headless-chrome`
 - `mariadb`
 - `playit-agent`
+- `pterodactyl-panel`
+- `pterodactyl-wings`
 - `postgres`
 - `reactive-resume`
 - `redis`

@@ -1,0 +1,142 @@
+{
+  "$schema": "../app-info-schema.json",
+  "name": "Pterodactyl Panel",
+  "id": "pterodactyl-panel",
+  "available": true,
+  "short_desc": "Web panel for managing game servers",
+  "author": "Pterodactyl Team",
+  "port": 8800,
+  "categories": [
+    "gaming",
+    "utilities"
+  ],
+  "description": "Pterodactyl Panel is a modern game server management panel for Docker-based nodes.",
+  "tipi_version": 1,
+  "version": "latest",
+  "source": "https://github.com/pterodactyl/panel",
+  "website": "https://pterodactyl.io/",
+  "exposable": true,
+  "dynamic_config": true,
+  "form_fields": [
+    {
+      "type": "url",
+      "label": "Panel URL",
+      "required": true,
+      "env_variable": "TIPI_PTERODACTYL_PANEL_APP_URL",
+      "default": "https://panel.example.com"
+    },
+    {
+      "type": "text",
+      "label": "Timezone",
+      "required": false,
+      "env_variable": "TIPI_PTERODACTYL_PANEL_APP_TIMEZONE",
+      "default": "UTC"
+    },
+    {
+      "type": "email",
+      "label": "Service Email",
+      "required": false,
+      "env_variable": "TIPI_PTERODACTYL_PANEL_APP_SERVICE_AUTHOR",
+      "default": "admin@example.com"
+    },
+    {
+      "type": "password",
+      "label": "App Key (base64)",
+      "required": true,
+      "min": 16,
+      "max": 128,
+      "env_variable": "TIPI_PTERODACTYL_PANEL_APP_KEY",
+      "default": ""
+    },
+    {
+      "type": "text",
+      "label": "Database Host",
+      "required": false,
+      "env_variable": "TIPI_PTERODACTYL_PANEL_DB_HOST",
+      "default": "mariadb"
+    },
+    {
+      "type": "number",
+      "label": "Database Port",
+      "required": false,
+      "min": 1,
+      "max": 65535,
+      "env_variable": "TIPI_PTERODACTYL_PANEL_DB_PORT",
+      "default": 3306
+    },
+    {
+      "type": "text",
+      "label": "Database Name",
+      "required": false,
+      "env_variable": "TIPI_PTERODACTYL_PANEL_DB_DATABASE",
+      "default": "pterodactyl"
+    },
+    {
+      "type": "text",
+      "label": "Database User",
+      "required": false,
+      "env_variable": "TIPI_PTERODACTYL_PANEL_DB_USERNAME",
+      "default": "pterodactyl"
+    },
+    {
+      "type": "password",
+      "label": "Database Password",
+      "required": false,
+      "min": 8,
+      "max": 128,
+      "env_variable": "TIPI_PTERODACTYL_PANEL_DB_PASSWORD",
+      "default": "pterodactylpass"
+    },
+    {
+      "type": "text",
+      "label": "Redis Host",
+      "required": false,
+      "env_variable": "TIPI_PTERODACTYL_PANEL_REDIS_HOST",
+      "default": "redis"
+    },
+    {
+      "type": "number",
+      "label": "Redis Port",
+      "required": false,
+      "min": 1,
+      "max": 65535,
+      "env_variable": "TIPI_PTERODACTYL_PANEL_REDIS_PORT",
+      "default": 6379
+    },
+    {
+      "type": "password",
+      "label": "Redis Password (optional)",
+      "required": false,
+      "env_variable": "TIPI_PTERODACTYL_PANEL_REDIS_PASSWORD",
+      "default": ""
+    },
+    {
+      "type": "boolean",
+      "label": "Environment-Only Bootstrap",
+      "required": false,
+      "env_variable": "TIPI_PTERODACTYL_PANEL_APP_ENVIRONMENT_ONLY",
+      "default": false
+    },
+    {
+      "type": "boolean",
+      "label": "App Debug",
+      "required": false,
+      "env_variable": "TIPI_PTERODACTYL_PANEL_APP_DEBUG",
+      "default": false
+    },
+    {
+      "type": "text",
+      "label": "Trusted Proxies",
+      "required": false,
+      "env_variable": "TIPI_PTERODACTYL_PANEL_TRUSTED_PROXIES",
+      "default": "*"
+    }
+  ],
+  "supported_architectures": [
+    "amd64",
+    "arm64"
+  ],
+  "created_at": 1771260702000,
+  "updated_at": 1771260702000,
+  "min_tipi_version": "4.5.0"
+}

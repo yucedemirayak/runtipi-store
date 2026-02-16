@@ -1,0 +1,39 @@
+{
+  "$schema": "../app-info-schema.json",
+  "name": "Pterodactyl Wings",
+  "id": "pterodactyl-wings",
+  "available": true,
+  "short_desc": "Node daemon for Pterodactyl game servers",
+  "author": "Pterodactyl Team",
+  "port": 8081,
+  "categories": [
+    "gaming",
+    "utilities"
+  ],
+  "description": "Wings is the daemon that runs game server containers for Pterodactyl.",
+  "tipi_version": 1,
+  "version": "latest",
+  "source": "https://github.com/pterodactyl/wings",
+  "website": "https://pterodactyl.io/",
+  "exposable": true,
+  "dynamic_config": true,
+  "no_gui": true,
+  "form_fields": [
+    {
+      "type": "number",
+      "label": "SFTP Port",
+      "required": false,
+      "min": 1,
+      "max": 65535,
+      "env_variable": "TIPI_PTERODACTYL_WINGS_SFTP_PORT",
+      "default": 2022
+    }
+  ],
+  "supported_architectures": [
+    "amd64",
+    "arm64"
+  ],
+  "created_at": 1771260702000,
+  "updated_at": 1771260702000,
+  "min_tipi_version": "4.5.0"
+}

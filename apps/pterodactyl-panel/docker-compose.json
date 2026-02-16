@@ -1,0 +1,41 @@
+{
+  "services": [
+    {
+      "name": "pterodactyl-panel",
+      "image": "ghcr.io/pterodactyl/panel:latest",
+      "isMain": true,
+      "internalPort": 80,
+      "environment": [
+        { "key": "TZ", "value": "${TZ}" },
+        { "key": "APP_URL", "value": "${TIPI_PTERODACTYL_PANEL_APP_URL}" },
+        { "key": "APP_TIMEZONE", "value": "${TIPI_PTERODACTYL_PANEL_APP_TIMEZONE}" },
+        { "key": "APP_SERVICE_AUTHOR", "value": "${TIPI_PTERODACTYL_PANEL_APP_SERVICE_AUTHOR}" },
+        { "key": "APP_KEY", "value": "${TIPI_PTERODACTYL_PANEL_APP_KEY}" },
+        { "key": "APP_ENV", "value": "production" },
+        { "key": "APP_DEBUG", "value": "${TIPI_PTERODACTYL_PANEL_APP_DEBUG}" },
+        { "key": "APP_ENVIRONMENT_ONLY", "value": "${TIPI_PTERODACTYL_PANEL_APP_ENVIRONMENT_ONLY}" },
+        { "key": "TRUSTED_PROXIES", "value": "${TIPI_PTERODACTYL_PANEL_TRUSTED_PROXIES}" },
+        { "key": "CACHE_DRIVER", "value": "redis" },
+        { "key": "SESSION_DRIVER", "value": "redis" },
+        { "key": "QUEUE_CONNECTION", "value": "redis" },
+        { "key": "DB_CONNECTION", "value": "mysql" },
+        { "key": "DB_HOST", "value": "${TIPI_PTERODACTYL_PANEL_DB_HOST}" },
+        { "key": "DB_PORT", "value": "${TIPI_PTERODACTYL_PANEL_DB_PORT}" },
+        { "key": "DB_DATABASE", "value": "${TIPI_PTERODACTYL_PANEL_DB_DATABASE}" },
+        { "key": "DB_USERNAME", "value": "${TIPI_PTERODACTYL_PANEL_DB_USERNAME}" },
+        { "key": "DB_PASSWORD", "value": "${TIPI_PTERODACTYL_PANEL_DB_PASSWORD}" },
+        { "key": "REDIS_HOST", "value": "${TIPI_PTERODACTYL_PANEL_REDIS_HOST}" },
+        { "key": "REDIS_PORT", "value": "${TIPI_PTERODACTYL_PANEL_REDIS_PORT}" },
+        { "key": "REDIS_PASSWORD", "value": "${TIPI_PTERODACTYL_PANEL_REDIS_PASSWORD}" }
+      ],
+      "volumes": [
+        { "hostPath": "${APP_DATA_DIR}/var", "containerPath": "/app/var" },
+        { "hostPath": "${APP_DATA_DIR}/logs", "containerPath": "/app/storage/logs" },
+        { "hostPath": "${APP_DATA_DIR}/nginx", "containerPath": "/etc/nginx/http.d" },
+        { "hostPath": "${APP_DATA_DIR}/certs", "containerPath": "/etc/letsencrypt" }
+      ]
+    }
+  ],
+  "schemaVersion": 2,
+  "$schema": "https://schemas.runtipi.io/v2/dynamic-compose.json"
+}

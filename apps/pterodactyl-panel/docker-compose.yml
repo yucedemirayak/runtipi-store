@@ -1,0 +1,59 @@
+version: '3.8'
+
+services:
+  pterodactyl-panel:
+    container_name: pterodactyl-panel
+    image: ghcr.io/pterodactyl/panel:latest
+    restart: unless-stopped
+    ports:
+      - ${APP_PORT}:80
+    networks:
+      - tipi_main_network
+    environment:
+      - TZ=${TZ}
+      - APP_URL=${TIPI_PTERODACTYL_PANEL_APP_URL}
+      - APP_TIMEZONE=${TIPI_PTERODACTYL_PANEL_APP_TIMEZONE}
+      - APP_SERVICE_AUTHOR=${TIPI_PTERODACTYL_PANEL_APP_SERVICE_AUTHOR}
+      - APP_KEY=${TIPI_PTERODACTYL_PANEL_APP_KEY}
+      - APP_ENV=production
+      - APP_DEBUG=${TIPI_PTERODACTYL_PANEL_APP_DEBUG}
+      - APP_ENVIRONMENT_ONLY=${TIPI_PTERODACTYL_PANEL_APP_ENVIRONMENT_ONLY}
+      - TRUSTED_PROXIES=${TIPI_PTERODACTYL_PANEL_TRUSTED_PROXIES}
+      - CACHE_DRIVER=redis
+      - SESSION_DRIVER=redis
+      - QUEUE_CONNECTION=redis
+      - DB_CONNECTION=mysql
+      - DB_HOST=${TIPI_PTERODACTYL_PANEL_DB_HOST}
+      - DB_PORT=${TIPI_PTERODACTYL_PANEL_DB_PORT}
+      - DB_DATABASE=${TIPI_PTERODACTYL_PANEL_DB_DATABASE}
+      - DB_USERNAME=${TIPI_PTERODACTYL_PANEL_DB_USERNAME}
+      - DB_PASSWORD=${TIPI_PTERODACTYL_PANEL_DB_PASSWORD}
+      - REDIS_HOST=${TIPI_PTERODACTYL_PANEL_REDIS_HOST}
+      - REDIS_PORT=${TIPI_PTERODACTYL_PANEL_REDIS_PORT}
+      - REDIS_PASSWORD=${TIPI_PTERODACTYL_PANEL_REDIS_PASSWORD}
+    volumes:
+      - ${APP_DATA_DIR}/var:/app/var
+      - ${APP_DATA_DIR}/logs:/app/storage/logs
+      - ${APP_DATA_DIR}/nginx:/etc/nginx/http.d
+      - ${APP_DATA_DIR}/certs:/etc/letsencrypt
+    labels:
+      traefik.enable: true
+      traefik.http.middlewares.pterodactyl-panel-web-redirect.redirectscheme.scheme: https
+      traefik.http.services.pterodactyl-panel.loadbalancer.server.port: 80
+      traefik.http.routers.pterodactyl-panel-insecure.rule: Host(`${APP_DOMAIN}`)
+      traefik.http.routers.pterodactyl-panel-insecure.entrypoints: web
+      traefik.http.routers.pterodactyl-panel-insecure.service: pterodactyl-panel
+      traefik.http.routers.pterodactyl-panel-insecure.middlewares: pterodactyl-panel-web-redirect
+      traefik.http.routers.pterodactyl-panel.rule: Host(`${APP_DOMAIN}`)
+      traefik.http.routers.pterodactyl-panel.entrypoints: websecure
+      traefik.http.routers.pterodactyl-panel.service: pterodactyl-panel
+      traefik.http.routers.pterodactyl-panel.tls.certresolver: myresolver
+      traefik.http.routers.pterodactyl-panel-local-insecure.rule: Host(`pterodactyl-panel.${LOCAL_DOMAIN}`)
+      traefik.http.routers.pterodactyl-panel-local-insecure.entrypoints: web
+      traefik.http.routers.pterodactyl-panel-local-insecure.service: pterodactyl-panel
+      traefik.http.routers.pterodactyl-panel-local-insecure.middlewares: pterodactyl-panel-web-redirect
+      traefik.http.routers.pterodactyl-panel-local.rule: Host(`pterodactyl-panel.${LOCAL_DOMAIN}`)
+      traefik.http.routers.pterodactyl-panel-local.entrypoints: websecure
+      traefik.http.routers.pterodactyl-panel-local.service: pterodactyl-panel
+      traefik.http.routers.pterodactyl-panel-local.tls: true
+      runtipi.managed: true
