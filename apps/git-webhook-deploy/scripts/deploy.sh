@@ -88,11 +88,7 @@ git_clone_branch() {
 }
 
 git_fetch_branch() {
-  if [ -n "${GIT_TOKEN}" ] && is_github_https_repo; then
-    GIT_TERMINAL_PROMPT=0 git -C "${PROJECT_DIR}" -c "http.extraHeader=Authorization: Bearer ${GIT_TOKEN}" fetch --prune "${REPO_URL}" "${REPO_BRANCH}:refs/remotes/origin/${REPO_BRANCH}"
-  else
-    GIT_TERMINAL_PROMPT=0 git -C "${PROJECT_DIR}" fetch --prune "${REPO_URL}" "${REPO_BRANCH}:refs/remotes/origin/${REPO_BRANCH}"
-  fi
+  GIT_TERMINAL_PROMPT=0 git -C "${PROJECT_DIR}" fetch --prune "$(auth_repo_url)" "${REPO_BRANCH}:refs/remotes/origin/${REPO_BRANCH}"
 }
 
 pm_install() {
