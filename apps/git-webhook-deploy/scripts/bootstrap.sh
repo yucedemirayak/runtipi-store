@@ -27,20 +27,31 @@ fi
 
 mkdir -p /home/site
 
+initial_deploy_failed="false"
+
 if [ "${DEPLOY_ON_STARTUP:-true}" = "true" ]; then
   log "Running initial deploy..."
-  /scripts/deploy.sh
+  if ! /scripts/deploy.sh; then
+    initial_deploy_failed="true"
+    log "Initial deploy failed. Keeping container alive for diagnostics and future retries."
+  fi
 else
   log "Skipping initial deploy."
 fi
 
 if [ -n "${WEBHOOK_SECRET:-}" ]; then
+  if [ "${initial_deploy_failed}" = "true" ]; then
+    log "Webhook listener remains active. Fix repository/build settings and push again to retry deploy."
+  fi
   log "Starting webhook server on 0.0.0.0:${WEBHOOK_PORT:-5000}${WEBHOOK_PATH:-/webhook}"
   exec node /scripts/webhook.mjs
 fi
 
 log "Webhook listener disabled (WEBHOOK_SECRET is empty)."
 log "To redeploy without webhook, restart the container."
+if [ "${initial_deploy_failed}" = "true" ]; then
+  log "Initial deploy failed and webhook is disabled, so no automatic retry will run."
+fi
 
 pid=""
 if [ -f /home/site/app.pid ]; then

@@ -83,11 +83,15 @@ auth_repo_url() {
   fi
 }
 
+git_clone_branch() {
+  GIT_TERMINAL_PROMPT=0 git clone --depth=1 -b "${REPO_BRANCH}" "$(auth_repo_url)" "${PROJECT_DIR}"
+}
+
 git_fetch_branch() {
   if [ -n "${GIT_TOKEN}" ] && is_github_https_repo; then
-    git -C "${PROJECT_DIR}" -c "http.extraHeader=Authorization: Bearer ${GIT_TOKEN}" fetch --prune origin "${REPO_BRANCH}"
+    GIT_TERMINAL_PROMPT=0 git -C "${PROJECT_DIR}" -c "http.extraHeader=Authorization: Bearer ${GIT_TOKEN}" fetch --prune "${REPO_URL}" "${REPO_BRANCH}:refs/remotes/origin/${REPO_BRANCH}"
   else
-    git -C "${PROJECT_DIR}" fetch --prune origin "${REPO_BRANCH}"
+    GIT_TERMINAL_PROMPT=0 git -C "${PROJECT_DIR}" fetch --prune "${REPO_URL}" "${REPO_BRANCH}:refs/remotes/origin/${REPO_BRANCH}"
   fi
 }
 
@@ -227,7 +231,7 @@ mkdir -p /home/site
 
 if [ ! -d "${PROJECT_DIR}/.git" ]; then
   log "Cloning repository..."
-  if ! git clone --depth=1 -b "${REPO_BRANCH}" "$(auth_repo_url)" "${PROJECT_DIR}"; then
+  if ! git_clone_branch; then
     log_auth_hint
     exit 1
   fi
@@ -240,7 +244,7 @@ else
     log "Fetch failed. Trying clean repository clone..."
     log_auth_hint
     rm -rf "${PROJECT_DIR}"
-    if ! git clone --depth=1 -b "${REPO_BRANCH}" "$(auth_repo_url)" "${PROJECT_DIR}"; then
+    if ! git_clone_branch; then
       log_auth_hint
       exit 1
     fi
