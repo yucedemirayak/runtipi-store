@@ -194,7 +194,11 @@ start_app() {
   case "${FRAMEWORK}" in
     nextjs)
       log "Starting Next.js app on port ${SITE_PORT}..."
-      (pm_run start -H 0.0.0.0 -p "${SITE_PORT}") >>"${APP_LOG_FILE}" 2>&1 &
+      if [ -x "./node_modules/.bin/next" ]; then
+        ("./node_modules/.bin/next" start -H 0.0.0.0 -p "${SITE_PORT}") >>"${APP_LOG_FILE}" 2>&1 &
+      else
+        (npx --yes next start -H 0.0.0.0 -p "${SITE_PORT}") >>"${APP_LOG_FILE}" 2>&1 &
+      fi
       ;;
     react-vite)
       log "Serving Vite dist/ on port ${SITE_PORT}..."
