@@ -24,7 +24,6 @@ Kisisel Runtipi app-store reposu.
 - `reactive-resume`
 - `redis`
 - `wordpress`
-- `yuce-site`
 
 ## Runtipi'ye ekleme
 
