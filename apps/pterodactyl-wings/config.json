@@ -11,7 +11,7 @@
     "utilities"
   ],
   "description": "Wings is the daemon that runs game server containers for Pterodactyl.",
-  "tipi_version": 1,
+  "tipi_version": 2,
   "version": "latest",
   "source": "https://github.com/pterodactyl/wings",
   "website": "https://pterodactyl.io/",
