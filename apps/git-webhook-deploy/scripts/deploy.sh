@@ -88,7 +88,19 @@ git_clone_branch() {
 }
 
 git_fetch_branch() {
-  GIT_TERMINAL_PROMPT=0 git -C "${PROJECT_DIR}" fetch --prune "$(auth_repo_url)" "${REPO_BRANCH}:refs/remotes/origin/${REPO_BRANCH}"
+  GIT_TERMINAL_PROMPT=0 git -C "${PROJECT_DIR}" fetch "$(auth_repo_url)" "${REPO_BRANCH}:refs/remotes/origin/${REPO_BRANCH}"
+}
+
+has_remote_branch_ref() {
+  git -C "${PROJECT_DIR}" rev-parse --verify --quiet "refs/remotes/origin/${REPO_BRANCH}" >/dev/null
+}
+
+clean_clone_or_fail() {
+  rm -rf "${PROJECT_DIR}"
+  if ! git_clone_branch; then
+    log_auth_hint
+    exit 1
+  fi
 }
 
 pm_install() {
@@ -240,16 +252,15 @@ else
   # Ensure origin matches current settings before any fetch.
   git -C "${PROJECT_DIR}" remote set-url origin "${REPO_URL}"
   log "Fetching latest changes..."
-  if ! git_fetch_branch; then
-    log "Fetch failed. Trying clean repository clone..."
+  if ! git_fetch_branch || ! has_remote_branch_ref; then
+    log "Fetch did not produce origin/${REPO_BRANCH}. Trying clean repository clone..."
     log_auth_hint
-    rm -rf "${PROJECT_DIR}"
-    if ! git_clone_branch; then
-      log_auth_hint
-      exit 1
-    fi
+    clean_clone_or_fail
   else
-    git -C "${PROJECT_DIR}" checkout -B "${REPO_BRANCH}" "origin/${REPO_BRANCH}"
+    if ! git -C "${PROJECT_DIR}" checkout -B "${REPO_BRANCH}" "origin/${REPO_BRANCH}"; then
+      log "Checkout from origin/${REPO_BRANCH} failed. Trying clean repository clone..."
+      clean_clone_or_fail
+    fi
   fi
   git -C "${PROJECT_DIR}" remote set-url origin "${REPO_URL}"
 fi
