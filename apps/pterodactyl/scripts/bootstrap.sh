@@ -41,7 +41,7 @@ if [ -n "${PTERODACTYL_ADMIN_EMAIL:-}" ] && \
    [ -n "${PTERODACTYL_ADMIN_PASSWORD:-}" ]; then
 
   # Check if any admin user already exists
-  admin_count=$(php artisan tinker --execute="echo \App\Models\User::where('root_admin', 1)->count();" 2>/dev/null || echo "")
+  admin_count=$(php artisan tinker --execute="echo \Pterodactyl\Models\User::where('root_admin', 1)->count();" 2>/dev/null || echo "")
 
   if [ "$admin_count" = "0" ]; then
     log "Creating admin user: ${PTERODACTYL_ADMIN_USERNAME} (${PTERODACTYL_ADMIN_EMAIL})"
