@@ -25,4 +25,45 @@ if [ ! -f /app/.github/docker/entrypoint.sh ]; then
   exit 1
 fi
 
-exec /bin/ash /app/.github/docker/entrypoint.sh "$@"
+# Create a post-setup script that creates admin user then starts supervisord.
+# The original entrypoint runs migrations and execs its $@ at the end,
+# so we pass this script as the command instead of supervisord directly.
+cat > /tmp/post-setup.sh << 'POSTEOF'
+#!/bin/sh
+set -eu
+
+log() {
+  echo "[pterodactyl] $*"
+}
+
+if [ -n "${PTERODACTYL_ADMIN_EMAIL:-}" ] && \
+   [ -n "${PTERODACTYL_ADMIN_USERNAME:-}" ] && \
+   [ -n "${PTERODACTYL_ADMIN_PASSWORD:-}" ]; then
+
+  # Check if any admin user already exists
+  admin_count=$(php artisan tinker --execute="echo \App\Models\User::where('root_admin', 1)->count();" 2>/dev/null || echo "")
+
+  if [ "$admin_count" = "0" ]; then
+    log "Creating admin user: ${PTERODACTYL_ADMIN_USERNAME} (${PTERODACTYL_ADMIN_EMAIL})"
+    php artisan p:user:make \
+      --email="${PTERODACTYL_ADMIN_EMAIL}" \
+      --username="${PTERODACTYL_ADMIN_USERNAME}" \
+      --name-first="Admin" \
+      --name-last="User" \
+      --password="${PTERODACTYL_ADMIN_PASSWORD}" \
+      --admin=1 \
+      --no-interaction
+    log "Admin user created successfully."
+  else
+    log "Admin user already exists, skipping creation."
+  fi
+else
+  log "Admin credentials not set, skipping admin user creation."
+fi
+
+exec supervisord -n -c /etc/supervisord.conf
+POSTEOF
+
+chmod +x /tmp/post-setup.sh
+
+exec /bin/ash /app/.github/docker/entrypoint.sh /bin/sh /tmp/post-setup.sh

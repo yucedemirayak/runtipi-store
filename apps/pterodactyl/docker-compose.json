@@ -79,7 +79,10 @@
         { "key": "DB_PASSWORD", "value": "${TIPI_PTERODACTYL_DB_PASSWORD}" },
         { "key": "REDIS_HOST", "value": "${TIPI_PTERODACTYL_REDIS_HOST}" },
         { "key": "REDIS_PORT", "value": "${TIPI_PTERODACTYL_REDIS_PORT}" },
-        { "key": "REDIS_PASSWORD", "value": "${TIPI_PTERODACTYL_REDIS_PASSWORD}" }
+        { "key": "REDIS_PASSWORD", "value": "${TIPI_PTERODACTYL_REDIS_PASSWORD}" },
+        { "key": "PTERODACTYL_ADMIN_EMAIL", "value": "${TIPI_PTERODACTYL_ADMIN_EMAIL}" },
+        { "key": "PTERODACTYL_ADMIN_USERNAME", "value": "${TIPI_PTERODACTYL_ADMIN_USERNAME}" },
+        { "key": "PTERODACTYL_ADMIN_PASSWORD", "value": "${TIPI_PTERODACTYL_ADMIN_PASSWORD}" }
       ],
       "volumes": [
         { "hostPath": "${APP_DATA_DIR}/panel-var", "containerPath": "/app/var" },
