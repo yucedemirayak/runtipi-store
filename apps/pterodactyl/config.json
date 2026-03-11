@@ -1,17 +1,17 @@
 {
   "$schema": "../app-info-schema.json",
-  "name": "Pterodactyl Panel",
-  "id": "pterodactyl-panel",
+  "name": "Pterodactyl",
+  "id": "pterodactyl",
   "available": true,
-  "short_desc": "Web panel for managing game servers",
+  "short_desc": "Game server management panel with integrated Wings daemon",
   "author": "Pterodactyl Team",
   "port": 8800,
   "categories": [
     "gaming",
     "utilities"
   ],
-  "description": "Pterodactyl Panel is a modern game server management panel for Docker-based nodes.",
-  "tipi_version": 4,
+  "description": "Pterodactyl is a modern game server management panel backed by Docker. This app bundles the Panel and Wings daemon together for single-node deployments.",
+  "tipi_version": 1,
   "version": "latest",
   "source": "https://github.com/pterodactyl/panel",
   "website": "https://pterodactyl.io/",
@@ -22,21 +22,21 @@
       "type": "url",
       "label": "Panel URL",
       "required": true,
-      "env_variable": "TIPI_PTERODACTYL_PANEL_APP_URL",
+      "env_variable": "TIPI_PTERODACTYL_APP_URL",
       "default": "https://panel.example.com"
     },
     {
       "type": "text",
       "label": "Timezone",
       "required": false,
-      "env_variable": "TIPI_PTERODACTYL_PANEL_APP_TIMEZONE",
+      "env_variable": "TIPI_PTERODACTYL_APP_TIMEZONE",
       "default": "UTC"
     },
     {
       "type": "email",
       "label": "Service Email",
       "required": false,
-      "env_variable": "TIPI_PTERODACTYL_PANEL_APP_SERVICE_AUTHOR",
+      "env_variable": "TIPI_PTERODACTYL_APP_SERVICE_AUTHOR",
       "default": "admin@example.com"
     },
     {
@@ -45,15 +45,15 @@
       "required": true,
       "min": 16,
       "max": 128,
-      "env_variable": "TIPI_PTERODACTYL_PANEL_APP_KEY",
+      "env_variable": "TIPI_PTERODACTYL_APP_KEY",
       "default": ""
     },
     {
       "type": "text",
       "label": "Database Host",
       "required": false,
-      "env_variable": "TIPI_PTERODACTYL_PANEL_DB_HOST",
-      "default": "mariadb"
+      "env_variable": "TIPI_PTERODACTYL_DB_HOST",
+      "default": "pterodactyl-db"
     },
     {
       "type": "number",
@@ -61,21 +61,21 @@
       "required": false,
       "min": 1,
       "max": 65535,
-      "env_variable": "TIPI_PTERODACTYL_PANEL_DB_PORT",
+      "env_variable": "TIPI_PTERODACTYL_DB_PORT",
       "default": 3306
     },
     {
       "type": "text",
       "label": "Database Name",
       "required": false,
-      "env_variable": "TIPI_PTERODACTYL_PANEL_DB_DATABASE",
+      "env_variable": "TIPI_PTERODACTYL_DB_DATABASE",
       "default": "pterodactyl"
     },
     {
       "type": "text",
       "label": "Database User",
       "required": false,
-      "env_variable": "TIPI_PTERODACTYL_PANEL_DB_USERNAME",
+      "env_variable": "TIPI_PTERODACTYL_DB_USERNAME",
       "default": "pterodactyl"
     },
     {
@@ -84,15 +84,15 @@
       "required": false,
       "min": 8,
       "max": 128,
-      "env_variable": "TIPI_PTERODACTYL_PANEL_DB_PASSWORD",
+      "env_variable": "TIPI_PTERODACTYL_DB_PASSWORD",
       "default": "pterodactylpass"
     },
     {
       "type": "text",
       "label": "Redis Host",
       "required": false,
-      "env_variable": "TIPI_PTERODACTYL_PANEL_REDIS_HOST",
-      "default": "redis"
+      "env_variable": "TIPI_PTERODACTYL_REDIS_HOST",
+      "default": "pterodactyl-redis"
     },
     {
       "type": "number",
@@ -100,36 +100,45 @@
       "required": false,
       "min": 1,
       "max": 65535,
-      "env_variable": "TIPI_PTERODACTYL_PANEL_REDIS_PORT",
+      "env_variable": "TIPI_PTERODACTYL_REDIS_PORT",
       "default": 6379
     },
     {
       "type": "password",
       "label": "Redis Password (optional)",
       "required": false,
-      "env_variable": "TIPI_PTERODACTYL_PANEL_REDIS_PASSWORD",
+      "env_variable": "TIPI_PTERODACTYL_REDIS_PASSWORD",
       "default": ""
     },
     {
       "type": "boolean",
       "label": "Environment-Only Bootstrap",
       "required": false,
-      "env_variable": "TIPI_PTERODACTYL_PANEL_APP_ENVIRONMENT_ONLY",
+      "env_variable": "TIPI_PTERODACTYL_APP_ENVIRONMENT_ONLY",
       "default": false
     },
     {
       "type": "boolean",
       "label": "App Debug",
       "required": false,
-      "env_variable": "TIPI_PTERODACTYL_PANEL_APP_DEBUG",
+      "env_variable": "TIPI_PTERODACTYL_APP_DEBUG",
       "default": false
     },
     {
       "type": "text",
       "label": "Trusted Proxies",
       "required": false,
-      "env_variable": "TIPI_PTERODACTYL_PANEL_TRUSTED_PROXIES",
+      "env_variable": "TIPI_PTERODACTYL_TRUSTED_PROXIES",
       "default": "*"
+    },
+    {
+      "type": "number",
+      "label": "SFTP Port",
+      "required": false,
+      "min": 1,
+      "max": 65535,
+      "env_variable": "TIPI_PTERODACTYL_SFTP_PORT",
+      "default": 2022
     }
   ],
   "supported_architectures": [

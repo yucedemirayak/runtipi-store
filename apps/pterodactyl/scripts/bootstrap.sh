@@ -2,7 +2,7 @@
 set -eu
 
 log() {
-  echo "[pterodactyl-panel] $*"
+  echo "[pterodactyl] $*"
 }
 
 if ! command -v mysql >/dev/null 2>&1; then
