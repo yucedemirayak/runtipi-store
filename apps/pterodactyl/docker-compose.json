@@ -28,7 +28,7 @@
         { "hostPath": "${APP_DATA_DIR}/db-data", "containerPath": "/var/lib/mysql" }
       ],
       "healthCheck": {
-        "test": "mysqladmin ping -h localhost -u root --password=$MYSQL_ROOT_PASSWORD",
+        "test": "healthcheck.sh --connect",
         "interval": "10s",
         "timeout": "5s",
         "retries": 5
