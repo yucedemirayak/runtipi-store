@@ -89,7 +89,8 @@
         { "hostPath": "${APP_DATA_DIR}/panel-logs", "containerPath": "/app/storage/logs" },
         { "hostPath": "${APP_DATA_DIR}/panel-nginx", "containerPath": "/etc/nginx/http.d" },
         { "hostPath": "${APP_DATA_DIR}/panel-certs", "containerPath": "/etc/letsencrypt" },
-        { "hostPath": "${ROOT_FOLDER_HOST}/apps/${APP_STORE_ID}/${APP_NAME}/scripts", "containerPath": "/scripts", "readOnly": true }
+        { "hostPath": "${ROOT_FOLDER_HOST}/apps/${APP_STORE_ID}/${APP_NAME}/scripts", "containerPath": "/scripts", "readOnly": true },
+        { "hostPath": "${APP_DATA_DIR}/wings-etc", "containerPath": "/wings-config" }
       ]
     },
     {

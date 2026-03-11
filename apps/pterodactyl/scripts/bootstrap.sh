@@ -61,6 +61,15 @@ else
   log "Admin credentials not set, skipping admin user creation."
 fi
 
+# Auto-create default node and write Wings config.yml
+if [ -f /scripts/setup-node.php ]; then
+  log "Running node auto-setup..."
+  php /app/artisan tinker --execute="require('/scripts/setup-node.php');" 2>&1 || \
+    log "Node auto-setup failed (non-fatal). You can configure manually via Panel UI."
+else
+  log "setup-node.php not found, skipping node auto-setup."
+fi
+
 exec supervisord -n -c /etc/supervisord.conf
 POSTEOF
 

@@ -98,6 +98,7 @@ services:
       - ${APP_DATA_DIR}/panel-nginx:/etc/nginx/http.d
       - ${APP_DATA_DIR}/panel-certs:/etc/letsencrypt
       - ${ROOT_FOLDER_HOST}/apps/${APP_STORE_ID}/${APP_NAME}/scripts:/scripts:ro
+      - ${APP_DATA_DIR}/wings-etc:/wings-config
     labels:
       traefik.enable: true
       traefik.http.middlewares.pterodactyl-web-redirect.redirectscheme.scheme: https
