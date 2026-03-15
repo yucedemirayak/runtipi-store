@@ -28,15 +28,11 @@ $tokenPlain = Str::random(64);
 $tokenId = Str::random(16);
 $nodeUuid = Str::uuid()->toString();
 
-// The DaemonAuthenticate middleware does:
-//   $this->encrypter->decrypt($node->daemon_token)
-// The Node model has an encryptable trait that auto-decrypts daemon_token on access.
-// So the middleware gets auto-decrypted value, then decrypts AGAIN.
-// This means daemon_token in DB must be double-encrypted:
-//   DB value = encrypt(encrypt(plaintext))
-//   Model accessor decrypts once → encrypt(plaintext)
-//   Middleware decrypts again → plaintext
-$tokenEncrypted = Crypt::encryptString($tokenPlain);
+// The DaemonAuthenticate middleware calls $encrypter->decrypt() (not decryptString).
+// decrypt() expects a serialized payload (from encrypt(), not encryptString()).
+// The Node model does NOT auto-decrypt daemon_token (raw == accessor).
+// So we store encrypt($tokenPlain) in DB, middleware does decrypt() → plaintext.
+$tokenEncrypted = Crypt::encrypt($tokenPlain);
 
 // Insert via DB query to bypass the model's encryptable trait
 $nodeId = DB::table('nodes')->insertGetId([
