@@ -22,38 +22,39 @@ $location = Location::firstOrCreate(
 // Derive FQDN from APP_URL (e.g. http://100.77.153.97:8800 → 100.77.153.97)
 $fqdn = parse_url(config('app.url'), PHP_URL_HOST) ?: 'localhost';
 
-// Generate token values that Node::create doesn't auto-fill
+// Generate values that Node::create doesn't auto-fill
 $tokenPlain = Str::random(64);
 $tokenId = Str::random(16);
+$nodeUuid = Str::uuid()->toString();
 
 // Create the node with all required fields
-$node = Node::create([
-    'uuid'                 => Str::uuid()->toString(),
-    'name'                 => 'Default Node',
-    'description'          => 'Auto-created local node',
-    'location_id'          => $location->id,
-    'fqdn'                 => $fqdn,
-    'scheme'               => 'http',
-    'behind_proxy'         => false,
-    'maintenance_mode'     => false,
-    'memory'               => 1024,
-    'memory_overallocate'  => -1,
-    'disk'                 => 10240,
-    'disk_overallocate'    => -1,
-    'upload_size'          => 100,
-    'daemon_token_id'      => $tokenId,
-    'daemon_token'         => Crypt::encryptString($tokenPlain),
-    'daemonListen'         => 8080,
-    'daemonSFTP'           => 2022,
-    'daemonBase'           => '/var/lib/pterodactyl/volumes',
-]);
+$node = new Node();
+$node->uuid                = $nodeUuid;
+$node->name                = 'Default Node';
+$node->description         = 'Auto-created local node';
+$node->location_id         = $location->id;
+$node->fqdn                = $fqdn;
+$node->scheme              = 'http';
+$node->behind_proxy        = false;
+$node->maintenance_mode    = false;
+$node->memory              = 1024;
+$node->memory_overallocate = -1;
+$node->disk                = 10240;
+$node->disk_overallocate   = -1;
+$node->upload_size         = 100;
+$node->daemon_token_id     = $tokenId;
+$node->daemon_token        = Crypt::encryptString($tokenPlain);
+$node->daemonListen        = 8080;
+$node->daemonSFTP          = 2022;
+$node->daemonBase          = '/var/lib/pterodactyl/volumes';
+$node->save();
 
 echo "[pterodactyl] Node created: {$node->name} (ID: {$node->id}, FQDN: {$fqdn})\n";
 
 // Build Wings config.yml manually since we have all the values
 $config = [
     'debug'   => false,
-    'uuid'    => $node->uuid,
+    'uuid'    => $nodeUuid,
     'token_id' => $tokenId,
     'token'   => $tokenPlain,
     'api'     => [
@@ -76,5 +77,7 @@ $config = [
 ];
 
 $yaml = \Symfony\Component\Yaml\Yaml::dump($config, 10, 2);
+// Symfony YAML dumps empty array as {}, Wings expects [] (sequence)
+$yaml = str_replace('allowed_mounts: {  }', 'allowed_mounts: []', $yaml);
 file_put_contents('/wings-config/config.yml', $yaml);
 echo "[pterodactyl] Wings config written to /wings-config/config.yml\n";
