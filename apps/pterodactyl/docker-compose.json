@@ -78,7 +78,6 @@
         { "key": "DB_PASSWORD", "value": "pterodactylpass" },
         { "key": "REDIS_HOST", "value": "pterodactyl-redis" },
         { "key": "REDIS_PORT", "value": "6379" },
-        { "key": "REDIS_PASSWORD", "value": "" },
         { "key": "PTERODACTYL_ADMIN_EMAIL", "value": "${TIPI_PTERODACTYL_ADMIN_EMAIL}" },
         { "key": "PTERODACTYL_ADMIN_USERNAME", "value": "${TIPI_PTERODACTYL_ADMIN_USERNAME}" },
         { "key": "PTERODACTYL_ADMIN_PASSWORD", "value": "${TIPI_PTERODACTYL_ADMIN_PASSWORD}" }
