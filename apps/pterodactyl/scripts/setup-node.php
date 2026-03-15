@@ -5,7 +5,7 @@
 use Pterodactyl\Models\Location;
 use Pterodactyl\Models\Node;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Crypt;
+
 
 // Skip if a node already exists
 if (Node::count() > 0) {
@@ -43,7 +43,7 @@ $node->disk                = 10240;
 $node->disk_overallocate   = -1;
 $node->upload_size         = 100;
 $node->daemon_token_id     = $tokenId;
-$node->daemon_token        = Crypt::encryptString($tokenPlain);
+$node->daemon_token        = $tokenPlain;
 $node->daemonListen        = 8080;
 $node->daemonSFTP          = 2022;
 $node->daemonBase          = '/var/lib/pterodactyl/volumes';
