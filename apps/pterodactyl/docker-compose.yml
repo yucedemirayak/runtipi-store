@@ -22,14 +22,14 @@ services:
     networks:
       - tipi_main_network
     environment:
-      - MYSQL_ROOT_PASSWORD=${TIPI_PTERODACTYL_DB_PASSWORD}
-      - MYSQL_DATABASE=${TIPI_PTERODACTYL_DB_DATABASE}
-      - MYSQL_USER=${TIPI_PTERODACTYL_DB_USERNAME}
-      - MYSQL_PASSWORD=${TIPI_PTERODACTYL_DB_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=pterodactylpass
+      - MYSQL_DATABASE=pterodactyl
+      - MYSQL_USER=pterodactyl
+      - MYSQL_PASSWORD=pterodactylpass
     volumes:
       - ${APP_DATA_DIR}/db-data:/var/lib/mysql
     healthcheck:
-      test: ["CMD", "mariadb-admin", "ping", "-h", "localhost", "-u${TIPI_PTERODACTYL_DB_USERNAME}", "-p${TIPI_PTERODACTYL_DB_PASSWORD}"]
+      test: ["CMD", "mariadb-admin", "ping", "-h", "localhost", "-upterodactyl", "-ppterodactylpass"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -69,26 +69,25 @@ services:
       - tipi_main_network
     environment:
       - TZ=${TZ}
-      - APP_URL=${TIPI_PTERODACTYL_APP_URL}
+      - APP_URL=http://pterodactyl
       - APP_TIMEZONE=${TIPI_PTERODACTYL_APP_TIMEZONE}
-      - APP_SERVICE_AUTHOR=${TIPI_PTERODACTYL_APP_SERVICE_AUTHOR}
-      - APP_KEY=${TIPI_PTERODACTYL_APP_KEY}
+      - APP_SERVICE_AUTHOR=admin@example.com
       - APP_ENV=production
-      - APP_DEBUG=${TIPI_PTERODACTYL_APP_DEBUG}
-      - APP_ENVIRONMENT_ONLY=${TIPI_PTERODACTYL_APP_ENVIRONMENT_ONLY}
-      - TRUSTED_PROXIES=${TIPI_PTERODACTYL_TRUSTED_PROXIES}
+      - APP_DEBUG=false
+      - APP_ENVIRONMENT_ONLY=false
+      - TRUSTED_PROXIES=*
       - CACHE_DRIVER=redis
       - SESSION_DRIVER=redis
       - QUEUE_CONNECTION=redis
       - DB_CONNECTION=mysql
-      - DB_HOST=${TIPI_PTERODACTYL_DB_HOST}
-      - DB_PORT=${TIPI_PTERODACTYL_DB_PORT}
-      - DB_DATABASE=${TIPI_PTERODACTYL_DB_DATABASE}
-      - DB_USERNAME=${TIPI_PTERODACTYL_DB_USERNAME}
-      - DB_PASSWORD=${TIPI_PTERODACTYL_DB_PASSWORD}
-      - REDIS_HOST=${TIPI_PTERODACTYL_REDIS_HOST}
-      - REDIS_PORT=${TIPI_PTERODACTYL_REDIS_PORT}
-      - REDIS_PASSWORD=${TIPI_PTERODACTYL_REDIS_PASSWORD}
+      - DB_HOST=pterodactyl-db
+      - DB_PORT=3306
+      - DB_DATABASE=pterodactyl
+      - DB_USERNAME=pterodactyl
+      - DB_PASSWORD=pterodactylpass
+      - REDIS_HOST=pterodactyl-redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=
       - PTERODACTYL_ADMIN_EMAIL=${TIPI_PTERODACTYL_ADMIN_EMAIL}
       - PTERODACTYL_ADMIN_USERNAME=${TIPI_PTERODACTYL_ADMIN_USERNAME}
       - PTERODACTYL_ADMIN_PASSWORD=${TIPI_PTERODACTYL_ADMIN_PASSWORD}
@@ -130,7 +129,7 @@ services:
         condition: service_started
     ports:
       - 8081:8080
-      - ${TIPI_PTERODACTYL_SFTP_PORT}:2022
+      - 2022:2022
     networks:
       - tipi_main_network
     environment:

@@ -5,6 +5,20 @@ log() {
   echo "[pterodactyl] $*"
 }
 
+# Auto-generate APP_KEY if not set, persist across restarts
+KEY_FILE="/app/var/.app_key"
+if [ -z "${APP_KEY:-}" ]; then
+  if [ -f "$KEY_FILE" ]; then
+    export APP_KEY=$(cat "$KEY_FILE")
+    log "Loaded APP_KEY from persistent storage."
+  else
+    export APP_KEY="base64:$(openssl rand -base64 32)"
+    mkdir -p /app/var
+    echo "$APP_KEY" > "$KEY_FILE"
+    log "Generated new APP_KEY and saved to persistent storage."
+  fi
+fi
+
 if ! command -v mysql >/dev/null 2>&1; then
   log "mysql client missing, installing mariadb-client..."
 

@@ -19,16 +19,16 @@
       "name": "pterodactyl-db",
       "image": "mariadb:11",
       "environment": [
-        { "key": "MYSQL_ROOT_PASSWORD", "value": "${TIPI_PTERODACTYL_DB_PASSWORD}" },
-        { "key": "MYSQL_DATABASE", "value": "${TIPI_PTERODACTYL_DB_DATABASE}" },
-        { "key": "MYSQL_USER", "value": "${TIPI_PTERODACTYL_DB_USERNAME}" },
-        { "key": "MYSQL_PASSWORD", "value": "${TIPI_PTERODACTYL_DB_PASSWORD}" }
+        { "key": "MYSQL_ROOT_PASSWORD", "value": "pterodactylpass" },
+        { "key": "MYSQL_DATABASE", "value": "pterodactyl" },
+        { "key": "MYSQL_USER", "value": "pterodactyl" },
+        { "key": "MYSQL_PASSWORD", "value": "pterodactylpass" }
       ],
       "volumes": [
         { "hostPath": "${APP_DATA_DIR}/db-data", "containerPath": "/var/lib/mysql" }
       ],
       "healthCheck": {
-        "test": "mariadb-admin ping -h localhost -u${TIPI_PTERODACTYL_DB_USERNAME} -p${TIPI_PTERODACTYL_DB_PASSWORD}",
+        "test": "mariadb-admin ping -h localhost -upterodactyl -ppterodactylpass",
         "interval": "10s",
         "timeout": "5s",
         "retries": 5
@@ -60,26 +60,25 @@
       },
       "environment": [
         { "key": "TZ", "value": "${TZ}" },
-        { "key": "APP_URL", "value": "${TIPI_PTERODACTYL_APP_URL}" },
+        { "key": "APP_URL", "value": "http://pterodactyl" },
         { "key": "APP_TIMEZONE", "value": "${TIPI_PTERODACTYL_APP_TIMEZONE}" },
-        { "key": "APP_SERVICE_AUTHOR", "value": "${TIPI_PTERODACTYL_APP_SERVICE_AUTHOR}" },
-        { "key": "APP_KEY", "value": "${TIPI_PTERODACTYL_APP_KEY}" },
+        { "key": "APP_SERVICE_AUTHOR", "value": "admin@example.com" },
         { "key": "APP_ENV", "value": "production" },
-        { "key": "APP_DEBUG", "value": "${TIPI_PTERODACTYL_APP_DEBUG}" },
-        { "key": "APP_ENVIRONMENT_ONLY", "value": "${TIPI_PTERODACTYL_APP_ENVIRONMENT_ONLY}" },
-        { "key": "TRUSTED_PROXIES", "value": "${TIPI_PTERODACTYL_TRUSTED_PROXIES}" },
+        { "key": "APP_DEBUG", "value": "false" },
+        { "key": "APP_ENVIRONMENT_ONLY", "value": "false" },
+        { "key": "TRUSTED_PROXIES", "value": "*" },
         { "key": "CACHE_DRIVER", "value": "redis" },
         { "key": "SESSION_DRIVER", "value": "redis" },
         { "key": "QUEUE_CONNECTION", "value": "redis" },
         { "key": "DB_CONNECTION", "value": "mysql" },
-        { "key": "DB_HOST", "value": "${TIPI_PTERODACTYL_DB_HOST}" },
-        { "key": "DB_PORT", "value": "${TIPI_PTERODACTYL_DB_PORT}" },
-        { "key": "DB_DATABASE", "value": "${TIPI_PTERODACTYL_DB_DATABASE}" },
-        { "key": "DB_USERNAME", "value": "${TIPI_PTERODACTYL_DB_USERNAME}" },
-        { "key": "DB_PASSWORD", "value": "${TIPI_PTERODACTYL_DB_PASSWORD}" },
-        { "key": "REDIS_HOST", "value": "${TIPI_PTERODACTYL_REDIS_HOST}" },
-        { "key": "REDIS_PORT", "value": "${TIPI_PTERODACTYL_REDIS_PORT}" },
-        { "key": "REDIS_PASSWORD", "value": "${TIPI_PTERODACTYL_REDIS_PASSWORD}" },
+        { "key": "DB_HOST", "value": "pterodactyl-db" },
+        { "key": "DB_PORT", "value": "3306" },
+        { "key": "DB_DATABASE", "value": "pterodactyl" },
+        { "key": "DB_USERNAME", "value": "pterodactyl" },
+        { "key": "DB_PASSWORD", "value": "pterodactylpass" },
+        { "key": "REDIS_HOST", "value": "pterodactyl-redis" },
+        { "key": "REDIS_PORT", "value": "6379" },
+        { "key": "REDIS_PASSWORD", "value": "" },
         { "key": "PTERODACTYL_ADMIN_EMAIL", "value": "${TIPI_PTERODACTYL_ADMIN_EMAIL}" },
         { "key": "PTERODACTYL_ADMIN_USERNAME", "value": "${TIPI_PTERODACTYL_ADMIN_USERNAME}" },
         { "key": "PTERODACTYL_ADMIN_PASSWORD", "value": "${TIPI_PTERODACTYL_ADMIN_PASSWORD}" }
@@ -107,7 +106,7 @@
           "tcp": true
         },
         {
-          "hostPort": "${TIPI_PTERODACTYL_SFTP_PORT}",
+          "hostPort": "2022",
           "containerPort": 2022,
           "tcp": true
         }
