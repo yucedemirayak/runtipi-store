@@ -29,7 +29,7 @@ services:
     volumes:
       - ${APP_DATA_DIR}/db-data:/var/lib/mysql
     healthcheck:
-      test: ["CMD", "healthcheck.sh", "--connect"]
+      test: ["CMD", "mariadb-admin", "ping", "-h", "localhost", "-u", "$$MYSQL_USER", "--password=$$MYSQL_PASSWORD"]
       interval: 10s
       timeout: 5s
       retries: 5
