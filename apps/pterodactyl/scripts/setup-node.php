@@ -49,5 +49,12 @@ echo "[pterodactyl] Node created: {$node->name} (ID: {$node->id}, FQDN: {$fqdn})
 // - decrypts daemon_token with decrypt() (matching encrypt() used above)
 // - uses DUMP_EMPTY_ARRAY_AS_SEQUENCE for allowed_mounts: []
 // - sets remote URL from route('index')
-file_put_contents('/wings-config/config.yml', $node->getYamlConfiguration());
+$yaml = $node->getYamlConfiguration();
+
+// Wings creates a pterodactyl0 Docker bridge network for game servers.
+// Its default subnet (172.18.0.0/16) overlaps with Runtipi's main network.
+// Assign a non-conflicting subnet.
+$yaml .= "\ndocker:\n  network:\n    interfaces:\n      v4:\n        subnet: 172.19.0.0/16\n        gateway: 172.19.0.1\n";
+
+file_put_contents('/wings-config/config.yml', $yaml);
 echo "[pterodactyl] Wings config written to /wings-config/config.yml\n";
