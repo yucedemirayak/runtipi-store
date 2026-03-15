@@ -5,7 +5,8 @@
 use Pterodactyl\Models\Location;
 use Pterodactyl\Models\Node;
 use Illuminate\Support\Str;
-
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\DB;
 
 // Skip if a node already exists
 if (Node::count() > 0) {
@@ -27,27 +28,40 @@ $tokenPlain = Str::random(64);
 $tokenId = Str::random(16);
 $nodeUuid = Str::uuid()->toString();
 
-// Create the node with all required fields
-$node = new Node();
-$node->uuid                = $nodeUuid;
-$node->name                = 'Default Node';
-$node->description         = 'Auto-created local node';
-$node->location_id         = $location->id;
-$node->fqdn                = $fqdn;
-$node->scheme              = 'http';
-$node->behind_proxy        = false;
-$node->maintenance_mode    = false;
-$node->memory              = 1024;
-$node->memory_overallocate = -1;
-$node->disk                = 10240;
-$node->disk_overallocate   = -1;
-$node->upload_size         = 100;
-$node->daemon_token_id     = $tokenId;
-$node->daemon_token        = $tokenPlain;
-$node->daemonListen        = 8080;
-$node->daemonSFTP          = 2022;
-$node->daemonBase          = '/var/lib/pterodactyl/volumes';
-$node->save();
+// The DaemonAuthenticate middleware does:
+//   $this->encrypter->decrypt($node->daemon_token)
+// The Node model has an encryptable trait that auto-decrypts daemon_token on access.
+// So the middleware gets auto-decrypted value, then decrypts AGAIN.
+// This means daemon_token in DB must be double-encrypted:
+//   DB value = encrypt(encrypt(plaintext))
+//   Model accessor decrypts once → encrypt(plaintext)
+//   Middleware decrypts again → plaintext
+$tokenEncrypted = Crypt::encryptString($tokenPlain);
+
+// Insert via DB query to bypass the model's encryptable trait
+$nodeId = DB::table('nodes')->insertGetId([
+    'uuid'                 => $nodeUuid,
+    'name'                 => 'Default Node',
+    'description'          => 'Auto-created local node',
+    'location_id'          => $location->id,
+    'fqdn'                 => $fqdn,
+    'scheme'               => 'http',
+    'behind_proxy'         => false,
+    'maintenance_mode'     => false,
+    'memory'               => 1024,
+    'memory_overallocate'  => -1,
+    'disk'                 => 10240,
+    'disk_overallocate'    => -1,
+    'upload_size'          => 100,
+    'daemon_token_id'      => $tokenId,
+    'daemon_token'         => $tokenEncrypted,
+    'daemonListen'         => 8080,
+    'daemonSFTP'           => 2022,
+    'daemonBase'           => '/var/lib/pterodactyl/volumes',
+    'created_at'           => now(),
+    'updated_at'           => now(),
+]);
+$node = Node::find($nodeId);
 
 echo "[pterodactyl] Node created: {$node->name} (ID: {$node->id}, FQDN: {$fqdn})\n";
 
