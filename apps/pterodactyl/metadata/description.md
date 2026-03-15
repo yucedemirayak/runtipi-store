@@ -1,47 +1,32 @@
 # Pterodactyl (Panel + Wings)
 
-This app bundles Pterodactyl Panel and Wings daemon into a single deployment for single-node setups.
+This app bundles Pterodactyl Panel and Wings daemon into a single deployment for single-node setups. Everything is pre-configured — just fill in admin credentials and you're ready to go.
 
 - **Panel** — Web interface for managing game servers
 - **Wings** — Node daemon that runs game server containers
 - **MariaDB** — Dedicated database (built-in)
 - **Redis** — Cache and queue backend (built-in)
 
-## First setup
+## Setup
 
-1. Generate an app key: `base64:$(openssl rand -base64 32)`
-2. Fill form fields with app key and other values. Database and Redis are pre-configured.
-4. Open the panel URL and complete setup.
-5. Create the first admin account:
-   ```
-   docker exec -it pterodactyl php artisan p:user:make
-   ```
+1. Fill in admin email, username, and password in the form.
+2. Install the app — everything else is automatic:
+   - APP_KEY is generated on first boot
+   - Database and Redis are pre-configured
+   - A default node and Wings config are created automatically
+3. Open the Panel and log in with your admin credentials.
 
-## Wings configuration
+## Creating a game server
 
-1. In Panel, create a node and generate its `config.yml`.
-2. Place the file at `${APP_DATA_DIR}/wings-etc/config.yml`.
-3. Restart the app.
-4. Panel reaches Wings internally at `http://pterodactyl-wings:8080`.
+1. Go to **Admin → Nodes → Default Node → Allocation**
+2. Add an allocation: IP `0.0.0.0`, port as needed (e.g. `25565` for Minecraft)
+3. Go to **Admin → Servers → Create Server** and select the allocation
+4. Connect to your game server via `<your-ip>:<port>`
 
 ## Ports
 
 | Service | Host Port | Container Port |
 |---------|-----------|---------------|
-| Panel | `${APP_PORT}` (default 8800) | 80 |
+| Panel | 8800 | 80 |
 | Wings API | 8081 | 8080 |
-| SFTP | `${TIPI_PTERODACTYL_SFTP_PORT}` (default 2022) | 2022 |
-
-## Persistent data
-
-| Host Path | Container Path | Service |
-|-----------|---------------|---------|
-| `${APP_DATA_DIR}/panel-var` | `/app/var` | Panel |
-| `${APP_DATA_DIR}/panel-logs` | `/app/storage/logs` | Panel |
-| `${APP_DATA_DIR}/panel-nginx` | `/etc/nginx/http.d` | Panel |
-| `${APP_DATA_DIR}/panel-certs` | `/etc/letsencrypt` | Panel |
-| `${APP_DATA_DIR}/wings-etc` | `/etc/pterodactyl` | Wings |
-| `${APP_DATA_DIR}/wings-logs` | `/var/log/pterodactyl` | Wings |
-| `/var/lib/pterodactyl` | `/var/lib/pterodactyl` | Wings (game data) |
-| `${APP_DATA_DIR}/db-data` | `/var/lib/mysql` | MariaDB |
-| `${APP_DATA_DIR}/redis-data` | `/data` | Redis |
+| SFTP | 2022 | 2022 |
