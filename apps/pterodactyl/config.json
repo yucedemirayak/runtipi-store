@@ -11,7 +11,7 @@
     "utilities"
   ],
   "description": "Pterodactyl is a modern game server management panel backed by Docker. This app bundles the Panel and Wings daemon together for single-node deployments.",
-  "tipi_version": 19,
+  "tipi_version": 20,
   "version": "latest",
   "source": "https://github.com/pterodactyl/panel",
   "website": "https://pterodactyl.io/",

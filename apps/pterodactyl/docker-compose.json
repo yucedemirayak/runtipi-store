@@ -110,9 +110,6 @@
           "tcp": true
         }
       ],
-      "environment": [
-        { "key": "TZ", "value": "${TZ}" }
-      ],
       "volumes": [
         { "hostPath": "/var/run/docker.sock", "containerPath": "/var/run/docker.sock" },
         { "hostPath": "/var/lib/docker/containers", "containerPath": "/var/lib/docker/containers", "readOnly": true },
