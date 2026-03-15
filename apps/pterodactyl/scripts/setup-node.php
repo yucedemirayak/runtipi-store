@@ -19,8 +19,9 @@ $location = Location::firstOrCreate(
     ['long'  => 'Local Node']
 );
 
-// Derive FQDN from APP_URL (e.g. http://100.77.153.97:8800 → 100.77.153.97)
-$fqdn = parse_url(config('app.url'), PHP_URL_HOST) ?: 'localhost';
+// Use the Docker internal hostname so Panel can reach Wings directly on port 8080.
+// The external IP:8081 mapping is for external clients; Panel uses internal network.
+$fqdn = 'pterodactyl-wings';
 
 // Use Panel's own NodeCreationService — it handles uuid, daemon_token
 // encryption (encrypt() not encryptString()), daemon_token_id, and
