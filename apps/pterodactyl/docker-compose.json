@@ -60,7 +60,7 @@
       },
       "environment": [
         { "key": "TZ", "value": "${TZ}" },
-        { "key": "APP_URL", "value": "http://pterodactyl" },
+        { "key": "APP_URL", "value": "http://${TIPI_PTERODACTYL_SERVER_IP}:${APP_PORT}" },
         { "key": "APP_TIMEZONE", "value": "${TIPI_PTERODACTYL_APP_TIMEZONE}" },
         { "key": "APP_SERVICE_AUTHOR", "value": "admin@example.com" },
         { "key": "APP_ENV", "value": "production" },

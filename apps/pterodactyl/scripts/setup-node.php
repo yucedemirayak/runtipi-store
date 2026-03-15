@@ -19,13 +19,12 @@ $location = Location::firstOrCreate(
     ['long'  => 'Local Node']
 );
 
-// Use the Docker internal hostname so Panel can reach Wings directly on port 8080.
-// The external IP:8081 mapping is for external clients; Panel uses internal network.
-$fqdn = 'pterodactyl-wings';
+// Use the Server IP from APP_URL for Node FQDN.
+// APP_URL is set to http://<SERVER_IP>:<APP_PORT> by docker-compose.
+// Browser WebSocket connects to FQDN:daemonListen, so FQDN must be
+// the external IP and daemonListen must be the host-mapped port (8081).
+$fqdn = parse_url(config('app.url'), PHP_URL_HOST) ?: 'localhost';
 
-// Use Panel's own NodeCreationService — it handles uuid, daemon_token
-// encryption (encrypt() not encryptString()), daemon_token_id, and
-// uses forceFill() to bypass $fillable restrictions.
 $service = app(NodeCreationService::class);
 $node = $service->handle([
     'name'                 => 'Default Node',
@@ -40,7 +39,7 @@ $node = $service->handle([
     'disk'                 => 10240,
     'disk_overallocate'    => -1,
     'upload_size'          => 100,
-    'daemonListen'         => 8080,
+    'daemonListen'         => 8081,
     'daemonSFTP'           => 2022,
 ]);
 
@@ -49,13 +48,14 @@ echo "[pterodactyl] Node created: {$node->name} (ID: {$node->id}, FQDN: {$fqdn})
 // Use the model's own getYamlConfiguration() which correctly:
 // - decrypts daemon_token with decrypt() (matching encrypt() used above)
 // - uses DUMP_EMPTY_ARRAY_AS_SEQUENCE for allowed_mounts: []
-// - sets remote URL from route('index')
+// - sets remote URL from route('index') → uses APP_URL with the real IP
 $yaml = $node->getYamlConfiguration();
 
 // Wings creates a pterodactyl0 Docker bridge network for game servers.
 // Its default subnet (172.18.0.0/16) overlaps with Runtipi's main network.
 // Assign a non-conflicting subnet.
-$yaml .= "\ndocker:\n  network:\n    interfaces:\n      v4:\n        subnet: 172.19.0.0/16\n        gateway: 172.19.0.1\n";
+// Also enable CORS private network access for browser WebSocket.
+$yaml .= "\ndocker:\n  network:\n    interfaces:\n      v4:\n        subnet: 172.19.0.0/16\n        gateway: 172.19.0.1\nallow_cors_private_network: true\n";
 
 file_put_contents('/wings-config/config.yml', $yaml);
 echo "[pterodactyl] Wings config written to /wings-config/config.yml\n";

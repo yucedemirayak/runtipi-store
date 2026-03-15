@@ -69,7 +69,7 @@ services:
       - tipi_main_network
     environment:
       - TZ=${TZ}
-      - APP_URL=http://pterodactyl
+      - APP_URL=http://${TIPI_PTERODACTYL_SERVER_IP}:${APP_PORT}
       - APP_TIMEZONE=${TIPI_PTERODACTYL_APP_TIMEZONE}
       - APP_SERVICE_AUTHOR=admin@example.com
       - APP_ENV=production
