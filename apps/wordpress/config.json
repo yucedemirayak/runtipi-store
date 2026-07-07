@@ -11,47 +11,13 @@
     "development"
   ],
   "description": "WordPress is a popular open-source content management system for websites and blogs.",
-  "tipi_version": 1,
+  "tipi_version": 2,
   "version": "php8.3-apache",
   "source": "https://github.com/WordPress/WordPress",
   "website": "https://wordpress.org/",
   "exposable": true,
   "dynamic_config": true,
   "form_fields": [
-    {
-      "type": "text",
-      "label": "Database Host",
-      "required": false,
-      "env_variable": "TIPI_WORDPRESS_DB_HOST",
-      "default": "mariadb:3306"
-    },
-    {
-      "type": "text",
-      "label": "Database Name",
-      "max": 64,
-      "min": 1,
-      "required": false,
-      "env_variable": "TIPI_WORDPRESS_DB_NAME",
-      "default": "app"
-    },
-    {
-      "type": "text",
-      "label": "Database User",
-      "max": 64,
-      "min": 1,
-      "required": false,
-      "env_variable": "TIPI_WORDPRESS_DB_USER",
-      "default": "mariadb"
-    },
-    {
-      "type": "password",
-      "label": "Database Password",
-      "max": 64,
-      "min": 1,
-      "required": false,
-      "env_variable": "TIPI_WORDPRESS_DB_PASSWORD",
-      "default": "mariadbpass"
-    },
     {
       "type": "text",
       "label": "Table Prefix",

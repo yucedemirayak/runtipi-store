@@ -11,7 +11,7 @@
     "utilities"
   ],
   "description": "Reactive Resume is a free and open-source resume builder that supports self-hosting.",
-  "tipi_version": 1,
+  "tipi_version": 2,
   "version": "v5.0.5",
   "source": "https://github.com/AmruthPillai/Reactive-Resume",
   "website": "https://rxresu.me/",
@@ -24,13 +24,6 @@
       "required": false,
       "env_variable": "TIPI_REACTIVE_RESUME_PUBLIC_URL",
       "default": "http://192.168.1.125:3010"
-    },
-    {
-      "type": "text",
-      "label": "Database URL",
-      "required": false,
-      "env_variable": "TIPI_REACTIVE_RESUME_DATABASE_URL",
-      "default": "postgresql://postgres:postgres@postgres:5432/app"
     },
     {
       "type": "password",
@@ -47,68 +40,6 @@
       "required": false,
       "env_variable": "TIPI_REACTIVE_RESUME_MAIL_FROM",
       "default": "noreply@localhost"
-    },
-    {
-      "type": "text",
-      "label": "Storage Endpoint",
-      "required": false,
-      "env_variable": "TIPI_REACTIVE_RESUME_STORAGE_ENDPOINT",
-      "default": "minio"
-    },
-    {
-      "type": "number",
-      "label": "Storage Port",
-      "required": false,
-      "env_variable": "TIPI_REACTIVE_RESUME_STORAGE_PORT",
-      "default": 9000,
-      "min": 1,
-      "max": 65535
-    },
-    {
-      "type": "text",
-      "label": "Storage Region",
-      "required": false,
-      "env_variable": "TIPI_REACTIVE_RESUME_STORAGE_REGION",
-      "default": "us-east-1"
-    },
-    {
-      "type": "text",
-      "label": "Storage Bucket",
-      "required": false,
-      "env_variable": "TIPI_REACTIVE_RESUME_STORAGE_BUCKET",
-      "default": "default"
-    },
-    {
-      "type": "text",
-      "label": "Storage Access Key",
-      "required": false,
-      "env_variable": "TIPI_REACTIVE_RESUME_STORAGE_ACCESS_KEY",
-      "default": "minioadmin"
-    },
-    {
-      "type": "password",
-      "label": "Storage Secret Key",
-      "required": false,
-      "min": 8,
-      "max": 128,
-      "env_variable": "TIPI_REACTIVE_RESUME_STORAGE_SECRET_KEY",
-      "default": "minioadmin"
-    },
-    {
-      "type": "text",
-      "label": "Chrome URL",
-      "required": false,
-      "env_variable": "TIPI_REACTIVE_RESUME_CHROME_URL",
-      "default": "ws://headless-chrome:3000"
-    },
-    {
-      "type": "password",
-      "label": "Chrome Token",
-      "required": false,
-      "min": 8,
-      "max": 128,
-      "env_variable": "TIPI_REACTIVE_RESUME_CHROME_TOKEN",
-      "default": "chrome_token"
     }
   ],
   "supported_architectures": [

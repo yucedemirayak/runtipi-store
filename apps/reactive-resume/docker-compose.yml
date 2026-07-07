@@ -1,9 +1,67 @@
 version: '3.8'
 services:
+  reactive-resume-postgres:
+    container_name: reactive-resume-postgres
+    image: postgres:17-alpine
+    restart: unless-stopped
+    networks:
+      - tipi_main_network
+    environment:
+      - TZ=${TZ}
+      - POSTGRES_USER=reactive_resume
+      - POSTGRES_PASSWORD=reactiveresumepass
+      - POSTGRES_DB=reactive_resume
+    volumes:
+      - ${APP_DATA_DIR}/db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "reactive_resume", "-d", "reactive_resume"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    labels:
+      runtipi.managed: true
+
+  reactive-resume-minio:
+    container_name: reactive-resume-minio
+    image: minio/minio:latest
+    restart: unless-stopped
+    command: ["server", "/data"]
+    networks:
+      - tipi_main_network
+    environment:
+      - TZ=${TZ}
+      - MINIO_ROOT_USER=minioadmin
+      - MINIO_ROOT_PASSWORD=minioadminpass
+    volumes:
+      - ${APP_DATA_DIR}/minio-data:/data
+    labels:
+      runtipi.managed: true
+
+  reactive-resume-chrome:
+    container_name: reactive-resume-chrome
+    image: browserless/chrome:1.61.1-puppeteer-21.4.1
+    restart: unless-stopped
+    networks:
+      - tipi_main_network
+    environment:
+      - TZ=${TZ}
+      - TOKEN=chrome_token
+      - EXIT_ON_HEALTH_FAILURE=true
+      - PRE_REQUEST_HEALTH_CHECK=true
+    labels:
+      runtipi.managed: true
+
   reactive-resume:
     container_name: reactive-resume
     image: amruthpillai/reactive-resume:v5.0.5
     restart: unless-stopped
+    depends_on:
+      reactive-resume-postgres:
+        condition: service_healthy
+      reactive-resume-minio:
+        condition: service_started
+      reactive-resume-chrome:
+        condition: service_started
     ports:
       - ${APP_PORT}:3000
     networks:
@@ -13,15 +71,15 @@ services:
       - NODE_ENV=production
       - APP_URL=${TIPI_REACTIVE_RESUME_PUBLIC_URL}
       - PRINTER_APP_URL=http://reactive-resume:3000
-      - PRINTER_ENDPOINT=${TIPI_REACTIVE_RESUME_CHROME_URL}?token=${TIPI_REACTIVE_RESUME_CHROME_TOKEN}
-      - DATABASE_URL=${TIPI_REACTIVE_RESUME_DATABASE_URL}
+      - PRINTER_ENDPOINT=ws://reactive-resume-chrome:3000?token=chrome_token
+      - DATABASE_URL=postgresql://reactive_resume:reactiveresumepass@reactive-resume-postgres:5432/reactive_resume
       - AUTH_SECRET=${TIPI_REACTIVE_RESUME_ACCESS_TOKEN_SECRET}
       - SMTP_FROM=${TIPI_REACTIVE_RESUME_MAIL_FROM}
-      - S3_ENDPOINT=http://${TIPI_REACTIVE_RESUME_STORAGE_ENDPOINT}:${TIPI_REACTIVE_RESUME_STORAGE_PORT}
-      - S3_REGION=${TIPI_REACTIVE_RESUME_STORAGE_REGION}
-      - S3_BUCKET=${TIPI_REACTIVE_RESUME_STORAGE_BUCKET}
-      - S3_ACCESS_KEY_ID=${TIPI_REACTIVE_RESUME_STORAGE_ACCESS_KEY}
-      - S3_SECRET_ACCESS_KEY=${TIPI_REACTIVE_RESUME_STORAGE_SECRET_KEY}
+      - S3_ENDPOINT=http://reactive-resume-minio:9000
+      - S3_REGION=us-east-1
+      - S3_BUCKET=default
+      - S3_ACCESS_KEY_ID=minioadmin
+      - S3_SECRET_ACCESS_KEY=minioadminpass
       - S3_FORCE_PATH_STYLE=true
     volumes:
       - ${APP_DATA_DIR}/data:/app/data

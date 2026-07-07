@@ -1,10 +1,52 @@
 {
   "services": [
     {
+      "name": "wordpress-db",
+      "image": "mariadb:11.4",
+      "internalPort": 3306,
+      "environment": [
+        {
+          "key": "TZ",
+          "value": "${TZ}"
+        },
+        {
+          "key": "MYSQL_ROOT_PASSWORD",
+          "value": "wordpresspass"
+        },
+        {
+          "key": "MYSQL_DATABASE",
+          "value": "wordpress"
+        },
+        {
+          "key": "MYSQL_USER",
+          "value": "wordpress"
+        },
+        {
+          "key": "MYSQL_PASSWORD",
+          "value": "wordpresspass"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/db-data",
+          "containerPath": "/var/lib/mysql"
+        }
+      ],
+      "healthCheck": {
+        "test": "mariadb-admin ping -h localhost -uwordpress -pwordpresspass",
+        "interval": "10s",
+        "timeout": "5s",
+        "retries": 5
+      }
+    },
+    {
       "name": "wordpress",
       "image": "wordpress:php8.3-apache",
       "isMain": true,
       "internalPort": 80,
+      "dependsOn": {
+        "wordpress-db": { "condition": "service_healthy" }
+      },
       "environment": [
         {
           "key": "TZ",
@@ -12,19 +54,19 @@
         },
         {
           "key": "WORDPRESS_DB_HOST",
-          "value": "${TIPI_WORDPRESS_DB_HOST}"
+          "value": "wordpress-db:3306"
         },
         {
           "key": "WORDPRESS_DB_USER",
-          "value": "${TIPI_WORDPRESS_DB_USER}"
+          "value": "wordpress"
         },
         {
           "key": "WORDPRESS_DB_PASSWORD",
-          "value": "${TIPI_WORDPRESS_DB_PASSWORD}"
+          "value": "wordpresspass"
         },
         {
           "key": "WORDPRESS_DB_NAME",
-          "value": "${TIPI_WORDPRESS_DB_NAME}"
+          "value": "wordpress"
         },
         {
           "key": "WORDPRESS_TABLE_PREFIX",

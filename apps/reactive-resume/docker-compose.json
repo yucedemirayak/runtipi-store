@@ -1,10 +1,99 @@
 {
   "services": [
     {
+      "name": "reactive-resume-postgres",
+      "image": "postgres:17-alpine",
+      "internalPort": 5432,
+      "environment": [
+        {
+          "key": "TZ",
+          "value": "${TZ}"
+        },
+        {
+          "key": "POSTGRES_USER",
+          "value": "reactive_resume"
+        },
+        {
+          "key": "POSTGRES_PASSWORD",
+          "value": "reactiveresumepass"
+        },
+        {
+          "key": "POSTGRES_DB",
+          "value": "reactive_resume"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/db-data",
+          "containerPath": "/var/lib/postgresql/data"
+        }
+      ],
+      "healthCheck": {
+        "test": "pg_isready -U reactive_resume -d reactive_resume",
+        "interval": "10s",
+        "timeout": "5s",
+        "retries": 5
+      }
+    },
+    {
+      "name": "reactive-resume-minio",
+      "image": "minio/minio:latest",
+      "internalPort": 9000,
+      "command": ["server", "/data"],
+      "environment": [
+        {
+          "key": "TZ",
+          "value": "${TZ}"
+        },
+        {
+          "key": "MINIO_ROOT_USER",
+          "value": "minioadmin"
+        },
+        {
+          "key": "MINIO_ROOT_PASSWORD",
+          "value": "minioadminpass"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/minio-data",
+          "containerPath": "/data"
+        }
+      ]
+    },
+    {
+      "name": "reactive-resume-chrome",
+      "image": "browserless/chrome:1.61.1-puppeteer-21.4.1",
+      "internalPort": 3000,
+      "environment": [
+        {
+          "key": "TZ",
+          "value": "${TZ}"
+        },
+        {
+          "key": "TOKEN",
+          "value": "chrome_token"
+        },
+        {
+          "key": "EXIT_ON_HEALTH_FAILURE",
+          "value": "true"
+        },
+        {
+          "key": "PRE_REQUEST_HEALTH_CHECK",
+          "value": "true"
+        }
+      ]
+    },
+    {
       "name": "reactive-resume",
       "image": "amruthpillai/reactive-resume:v5.0.5",
       "isMain": true,
       "internalPort": 3000,
+      "dependsOn": {
+        "reactive-resume-postgres": { "condition": "service_healthy" },
+        "reactive-resume-minio": { "condition": "service_started" },
+        "reactive-resume-chrome": { "condition": "service_started" }
+      },
       "environment": [
         {
           "key": "TZ",
@@ -24,11 +113,11 @@
         },
         {
           "key": "PRINTER_ENDPOINT",
-          "value": "${TIPI_REACTIVE_RESUME_CHROME_URL}?token=${TIPI_REACTIVE_RESUME_CHROME_TOKEN}"
+          "value": "ws://reactive-resume-chrome:3000?token=chrome_token"
         },
         {
           "key": "DATABASE_URL",
-          "value": "${TIPI_REACTIVE_RESUME_DATABASE_URL}"
+          "value": "postgresql://reactive_resume:reactiveresumepass@reactive-resume-postgres:5432/reactive_resume"
         },
         {
           "key": "AUTH_SECRET",
@@ -40,23 +129,23 @@
         },
         {
           "key": "S3_ENDPOINT",
-          "value": "http://${TIPI_REACTIVE_RESUME_STORAGE_ENDPOINT}:${TIPI_REACTIVE_RESUME_STORAGE_PORT}"
+          "value": "http://reactive-resume-minio:9000"
         },
         {
           "key": "S3_REGION",
-          "value": "${TIPI_REACTIVE_RESUME_STORAGE_REGION}"
+          "value": "us-east-1"
         },
         {
           "key": "S3_BUCKET",
-          "value": "${TIPI_REACTIVE_RESUME_STORAGE_BUCKET}"
+          "value": "default"
         },
         {
           "key": "S3_ACCESS_KEY_ID",
-          "value": "${TIPI_REACTIVE_RESUME_STORAGE_ACCESS_KEY}"
+          "value": "minioadmin"
         },
         {
           "key": "S3_SECRET_ACCESS_KEY",
-          "value": "${TIPI_REACTIVE_RESUME_STORAGE_SECRET_KEY}"
+          "value": "minioadminpass"
         },
         {
           "key": "S3_FORCE_PATH_STYLE",
